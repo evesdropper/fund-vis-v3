@@ -3,7 +3,7 @@ import streamlit as st
 
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
-
+st.set_page_config(page_title="Archive")
 st.title('Past Tanki Fund Archive')
 
 st.header("Coming Soon!")

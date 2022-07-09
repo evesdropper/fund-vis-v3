@@ -6,6 +6,7 @@ sys.path.insert(1, os.getcwd())
 
 from fund import utils
 
+st.set_page_config(page_title="About")
 st.title("About")
 
 st.markdown('''

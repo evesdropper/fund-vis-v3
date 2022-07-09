@@ -8,7 +8,7 @@ from fund import utils, tracker
 
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
-
+st.set_page_config(page_title="Hourly Changes")
 st.title('Fund Hourly Changes')
 
 # get data

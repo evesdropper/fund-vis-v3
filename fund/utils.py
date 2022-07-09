@@ -21,3 +21,12 @@ def get_day():
     today = datetime.datetime.utcnow().date()
     end_x = (today + datetime.timedelta(days=1))
     return end_x
+
+# format
+def format_percent(string):
+    if string == "0":
+        return "-"
+    elif string[0] == "-":
+        return f"\u2193 {string}%"
+    else:
+        return f"\u2191 {string}%"

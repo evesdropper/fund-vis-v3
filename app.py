@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from fund import utils, tracker
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide", page_title="Tanki Fund Tracker")
 
 st.title('Tanki Fund Tracker')
 st.header("2022 - Summer Major")
