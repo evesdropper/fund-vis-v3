@@ -10,9 +10,7 @@ st.header("2022 - Summer Major")
 
 # obtain and clean data
 df = utils.sheet_to_df()
-# print(df.head())
 unique_funds = df.sort_values("Time", ascending=True).drop_duplicates(subset=["Fund"]).sort_values("Fund", ascending=True)
-print(unique_funds[:20])
 ymax = df["Fund"].max()
 checks = list(tracker.CHECKPOINTS.keys())
 
