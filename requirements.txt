@@ -1,0 +1,12 @@
+Flask==2.1.2
+gunicorn==20.0.4
+matplotlib==3.5.2
+pandas==1.4.2
+numpy==1.22.4
+requests==2.27.1
+bs4==0.0.1
+beautifulsoup4 @ https://files.pythonhosted.org/packages/9c/d8/909c4089dbe4ade9f9705f143c9f13f065049a9d5e7d34c828aefdd0a97c/beautifulsoup4-4.11.1-py3-none-any.whl
+datetime==4.4
+plotly==5.9.0
+dash==2.5.1
+streamlit==1.10.0
