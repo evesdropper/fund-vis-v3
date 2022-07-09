@@ -29,7 +29,15 @@ fig = go.Figure([trace])
 fig.add_hline(y=avg_change, line_color="gray", annotation_text=f"Avg Hourly Change: {np.round(avg_change, -2) / 10 ** 3}k")
 
 # layout
-fig.update_xaxes(range=[tracker.START_DATE, utils.get_day()])
+fig.update_xaxes(range=[tracker.START_DATE, utils.get_day()], rangeslider_visible=True,
+    rangeselector=dict(
+        buttons=list([
+            dict(count=1, label="1d", step="day", stepmode="backward"),
+            dict(count=3, label="3d", step="day", stepmode="backward"),
+            dict(count=7, label="1w", step="day", stepmode="backward"),
+            dict(step="all")
+        ]))
+)
 fig.update_yaxes(range=[0, dfh_graph["Diff"].max() * 1.2])
 fig.update_layout(
     title={"text": "Tanki Fund Hourly Changes", 'x':0.5, 'xanchor': 'center'},
