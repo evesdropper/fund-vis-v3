@@ -39,7 +39,7 @@ with col2:
     st.metric(label="Change in Past 24 Hours", value=f"{inc_24}K", delta=f"{inc_24_pct}%")
 
 with col3:
-    st.metric(label="Estimated Final Fund", value=f"{tracker.predict(x=True)}M")
+    st.metric(label="Estimated Final Fund", value=f"{tracker.predict() / 10 ** 6}M")
 
 st.header("Fund Daily Changes")
 
