@@ -21,7 +21,7 @@ def regression(log=None):
     b = np.mean(y) - m * np.mean(x)
     return m, b
 
-def predict(x=False, y=False):
+def predict(x):
     """
     Prediction using Multiple Linear Regression on Time and ln(Time).
     """
@@ -30,4 +30,4 @@ def predict(x=False, y=False):
     df["# Days (Log)"] = np.log(mdates.datestr2num(df["Time"]) - X_SHIFT)
     lin_multiple = LinearRegression()
     lin_multiple.fit(X = df[["# Days", "# Days (Log)"]], y = df["Fund"])
-    return int(np.round(lin_multiple.predict([[35, np.log(35)]]), -3))
+    return lin_multiple.predict(x)
