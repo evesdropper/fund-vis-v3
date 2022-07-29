@@ -1,51 +1,33 @@
+import os, sys
 import numpy as np
 import pandas as pd
-import matplotlib.dates as mdates
-from sklearn.linear_model import LinearRegression
 import plotly.graph_objects as go
+import matplotlib.dates as mdates
 from fund import utils, tracker
 
-X_SHIFT = mdates.date2num(tracker.START_DATE)
+# insert at 1, 0 is the script path (or '' in REPL)
+sys.path.insert(1, os.getcwd())
 
+# get data
 df = utils.sheet_to_df()
-unique_funds = df.sort_values("Time", ascending=True).drop_duplicates(subset=["Fund"]).sort_values("Fund", ascending=True)
-ymax = df["Fund"].max()
-checks = list(tracker.CHECKPOINTS.keys())
+hourly = df["Time"].str.extract(rf'(:0[012])').dropna()
 
+# draw time series
+df_h = df.iloc[hourly.index]
+df_h["tnum"] = mdates.datestr2num(df_h["Time"])
+df_h["tnd"] = df_h["tnum"].diff()
+df_h["Diff"] = df_h["Fund"].diff()
+print(df_h)
+dfh_graph = df_h[df_h["tnd"].between(1/24, 1.05/24)].dropna()
+avg_change = dfh_graph["Diff"].mean()
 
-df["# Days"] = mdates.datestr2num(df["Time"]) - X_SHIFT
-df["# Days (Log)"] = np.log(mdates.datestr2num(df["Time"]) - X_SHIFT)
-lin_multiple = LinearRegression()
-lin_multiple.fit(X = df[["# Days", "# Days (Log)"]], y = df["Fund"])
+trace = go.Scatter(x=dfh_graph["Time"], y=dfh_graph["Diff"], mode="lines+markers", name="Change in Past Hour")
+fig = go.Figure([trace])
 
-unique_funds = df.sort_values("Time", ascending=True).drop_duplicates(subset=["Fund"]).sort_values("Fund", ascending=True)
-ymax = df["Fund"].max()
-checks = list(tracker.CHECKPOINTS.keys())
+# avg
+fig.add_hline(y=avg_change, line_color="gray", annotation_text=f"Avg Hourly Change: {np.round(avg_change, -2) / 10 ** 3}k")
 
-end_day_num = np.ceil(mdates.date2num(utils.get_day()) - X_SHIFT)
-days = np.arange(0, end_day_num, 1/1440) + 0.001
-pred_df = pd.DataFrame({"# Days": days, "# Days (Log)": np.log(days)})
-pred_df["Time"] = mdates.num2date(X_SHIFT + pred_df["# Days"])
-pred_df["Time"] = pred_df["Time"].dt.strftime("%Y-%m-%d %H:%M")
-pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)"]])
-
-# plotting
-tr_realtime = go.Scatter(x=unique_funds["Time"], y=unique_funds["Fund"], mode="lines+markers", name="Fund Entries")
-tr_prediction = go.Scatter(x=pred_df["Time"], y=pred_df["Predicted"], mode="lines", name="Predicted Fund", line = dict(color='grey'))
-fig = go.Figure([tr_realtime, tr_prediction])
-
-# Checklines
-for check in checks:
-    checkm = check * 1000000
-    if checkm <= ymax:
-        fig.add_hline(y=checkm, line_color="green", annotation_text=f"Achieved: {tracker.CHECKPOINTS[check]}")
-    else: 
-        fig.add_hline(y=checkm, line_color="red", annotation_text=f"Upcoming: {tracker.CHECKPOINTS[check]}")
-
-# Notes
-fig.add_vrect(x0="2022-07-04 02:00", x1="2022-07-04 17:33", fillcolor="red", annotation_text="Observations", opacity=0.2, line_width=0)
-
-# general
+# layout
 fig.update_xaxes(range=[tracker.START_DATE, utils.get_day()], rangeslider_visible=True,
     rangeselector=dict(
         buttons=list([
@@ -55,13 +37,13 @@ fig.update_xaxes(range=[tracker.START_DATE, utils.get_day()], rangeslider_visibl
             dict(step="all")
         ]))
 )
-fig.update_yaxes(range=[0, 1.2 * ymax])
+fig.update_yaxes(range=[0, dfh_graph["Diff"].max() * 1.2])
 fig.update_layout(
-    title={"text": "Tanki Fund over Time", 'x':0.5, 'xanchor': 'center'},
+    title={"text": "Tanki Fund Hourly Changes", 'x':0.5, 'xanchor': 'center'},
     xaxis_title="Time (UTC)",
-    yaxis_title="Amount in Tanki Fund",
+    yaxis_title="Change Since Past Hour",
     legend_title="Legend",
     showlegend = True,
     height=600,
 )
-# fig.show()
+fig.show()
