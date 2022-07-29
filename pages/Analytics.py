@@ -52,7 +52,7 @@ with col1:
     st.metric(label="Next Checkpoint", value=f"{tracker.CHECKPOINTS[np.ceil(df.iloc[-1, 1] / 10 ** 6)]}")
 
 with col2:
-    st.metric(label="Time To Reach", value=f"{tracker.tdelta_format(cdelta)}")
+    st.metric(label="Est. Time To Reach", value=f"{tracker.tdelta_format(cdelta)}")
 
 with col3:
     st.metric(label="Est. End Checkpoint", value=f"{tracker.CHECKPOINTS[np.floor(final_pred)]}")
