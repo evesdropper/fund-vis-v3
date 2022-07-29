@@ -3,6 +3,9 @@ import datetime
 import pandas as pd
 from fund import tracker
 
+# insert at 1, 0 is the script path (or '' in REPL)
+sys.path.insert(1, os.getcwd())
+
 """
 Utils
 """

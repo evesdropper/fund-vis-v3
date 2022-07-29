@@ -1,6 +1,8 @@
 import os, sys
+import datetime
 import numpy as np
 import pandas as pd
+import matplotlib.dates as mdates
 import streamlit as st
 
 from fund import utils, tracker
@@ -20,8 +22,6 @@ st.write(f"Last Updated: {cur_time}")
 
 st.header("At a Glance")
 
-
-
 # diffing
 df_h = df.iloc[hourly.index]
 df_h["Diff"] = df_h["Fund"].diff(periods=24)
@@ -40,6 +40,18 @@ with col2:
 
 with col3:
     st.metric(label="Estimated Final Fund", value=f"{int(np.round(tracker.predict([[35, np.log(35)]]), -3)) / 10 ** 6}M")
+
+st.header("Checkpoint Info")
+
+cdelta = (mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
+
+col1, col2, col3 = st.columns(2)
+with col1:
+    st.metric(label="Next Checkpoint", value=f"{tracker.CHECKPOINTS[np.ceil(df.iloc[-1, 1] / 10 ** 6)]}")
+
+with col2:
+    st.metric(label="Time To Reach", value=f"{tracker.tdelta_format(cdelta)}")
+
 
 st.header("Fund Daily Changes")
 
