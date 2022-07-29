@@ -1,3 +1,4 @@
+from http.client import NETWORK_AUTHENTICATION_REQUIRED
 import os, sys
 import datetime
 import numpy as np
@@ -25,7 +26,7 @@ def regression(log=None):
     b = np.mean(y) - m * np.mean(x)
     return m, b
 
-def predict(x):
+def predict(x, newton=True):
     """
     Prediction using Multiple Linear Regression on Time and ln(Time).
     """
@@ -35,30 +36,21 @@ def predict(x):
     df["# Days^2"] = np.square(mdates.datestr2num(df["Time"]) - X_SHIFT)
     lin_multiple = LinearRegression()
     lin_multiple.fit(X = df[["# Days", "# Days (Log)", "# Days^2"]], y = df["Fund"])
+    shift = np.ceil(df["Fund"].iloc[-1] / 10 ** 6)
+    if newton:
+        return lin_multiple.predict(x) - shift
     return lin_multiple.predict(x)
 
-def linreg_func(x):
-    """
-    Get the next checkpoint.
-    """
-    df = utils.sheet_to_df()
-    df["# Days"] = mdates.datestr2num(df["Time"]) - X_SHIFT
-    df["# Days (Log)"] = np.log(mdates.datestr2num(df["Time"]) - X_SHIFT)
-    lin_multiple = LinearRegression()
-    lin_multiple.fit(X = df[["# Days", "# Days (Log)"]], y = df["Fund"])
-    shift=np.ceil(df["Fund"].iloc[-1] / 10 ** 6)
-    return lin_multiple.coef_.T @ np.array([x, np.log(x), np.square(x)]) + lin_multiple.intercept_ - (shift * 10 ** 6) 
-
-def newton(f=linreg_func, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35), tol=1/24):
+def newton(f=predict, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35), tol=1/24):
     """
     Modified Newton's Method. Modified from MATLAB code from Math 128A PA1.
     """
     w, i = 1, 1
-    # print(' n a b p f(p) \n')
-    # print('--------------\n')
+    print(' n a b p f(p) \n')
+    print('--------------\n')
     while i < 100:
         p = a + (w * f(a) * (a - b)) / (f(b) - w * f(a))
-        # print(i, a, b, p, f(p))
+        print(i, a, b, p, f(p))
         if f(p) * f(b) > 0:
             w = 1 / 2
         else:
