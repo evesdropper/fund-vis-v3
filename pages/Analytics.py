@@ -1,5 +1,6 @@
 import os, sys
 import datetime
+from matplotlib.backend_bases import FigureManagerBase
 import numpy as np
 import pandas as pd
 import matplotlib.dates as mdates
@@ -29,6 +30,7 @@ df_h["% Change"] = df_h["Fund"].pct_change(periods=24)
 dfh_upd = df_h.dropna()
 inc_24 = int(dfh_upd.iloc[-1, 2]) / 10 ** 3
 inc_24_pct = str(np.round(dfh_upd.iloc[-1, 3] * 100, 3))
+final_pred = int(np.round(tracker.predict([[35, np.log(35)]]), -3)) / 10 ** 6
 
 col1, col2, col3 = st.columns(3)
 
@@ -39,18 +41,21 @@ with col2:
     st.metric(label="Change in Past 24 Hours", value=f"{inc_24}K", delta=f"{inc_24_pct}%")
 
 with col3:
-    st.metric(label="Estimated Final Fund", value=f"{int(np.round(tracker.predict([[35, np.log(35)]]), -3)) / 10 ** 6}M")
+    st.metric(label="Estimated Final Fund", value=f"{final_pred}M")
 
 st.header("Checkpoint Info")
 
 cdelta = (mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
 
-col1, col2, col3 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 with col1:
     st.metric(label="Next Checkpoint", value=f"{tracker.CHECKPOINTS[np.ceil(df.iloc[-1, 1] / 10 ** 6)]}")
 
 with col2:
     st.metric(label="Time To Reach", value=f"{tracker.tdelta_format(cdelta)}")
+
+with col3:
+    st.metric(label="End Checkpoint", value=f"{tracker.CHECKPOINTS[np.floor(final_pred)]}")
 
 
 st.header("Fund Daily Changes")
