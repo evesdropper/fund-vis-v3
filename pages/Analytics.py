@@ -55,7 +55,7 @@ with col2:
     st.metric(label="Time To Reach", value=f"{tracker.tdelta_format(cdelta)}")
 
 with col3:
-    st.metric(label="End Checkpoint", value=f"{tracker.CHECKPOINTS[np.floor(final_pred)]}")
+    st.metric(label="Est. End Checkpoint", value=f"{tracker.CHECKPOINTS[np.floor(final_pred)]}")
 
 
 st.header("Fund Daily Changes")
