@@ -37,7 +37,8 @@ for check in checks:
         fig.add_hline(y=checkm, line_color="red", annotation_text=f"Upcoming: {tracker.CHECKPOINTS[check]}")
 
 # Notes
-fig.add_vrect(x0="2022-07-04 02:00", x1="2022-07-04 17:33", fillcolor="red", annotation_text="Observations", opacity=0.2, line_width=0)
+fig.add_vrect(x0="2022-07-04 02:00", x1="2022-07-04 17:33", fillcolor="red", opacity=0.2, line_width=0)
+fig.add_vrect(x0="2022-07-14 18:30", x1="2022-07-16 03:30", fillcolor="red", opacity=0.2, line_width=0)
 
 # general
 fig.update_xaxes(range=[tracker.START_DATE, utils.get_day()], # rangeslider_visible=True,

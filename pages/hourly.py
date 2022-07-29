@@ -1,6 +1,7 @@
 import os, sys
 import numpy as np
 import pandas as pd
+import matplotlib.dates as mdates
 import plotly.graph_objects as go
 import streamlit as st
 
@@ -17,9 +18,10 @@ hourly = df["Time"].str.extract(rf'(:0[012])').dropna()
 
 # draw time series
 df_h = df.iloc[hourly.index]
-diff_series = df_h["Fund"].diff()
-df_h["Diff"] = diff_series
-dfh_graph = df_h.dropna()
+df_h["tnum"] = mdates.datestr2num(df_h["Time"])
+df_h["tnd"] = df_h["tnum"].diff()
+df_h["Diff"] = df_h["Fund"].diff()
+dfh_graph = df_h[df_h["tnd"].between(1/24, 1.05/24)].dropna()
 avg_change = dfh_graph["Diff"].mean()
 
 trace = go.Scatter(x=dfh_graph["Time"], y=dfh_graph["Diff"], mode="lines+markers", name="Change in Past Hour")
