@@ -30,7 +30,7 @@ df_h["% Change"] = df_h["Fund"].pct_change(periods=24)
 dfh_upd = df_h.dropna()
 inc_24 = int(dfh_upd.iloc[-1, 2]) / 10 ** 3
 inc_24_pct = str(np.round(dfh_upd.iloc[-1, 3] * 100, 3))
-final_pred = int(np.round(tracker.predict([[35, np.log(35), np.square(35)]], newton=False), -3)) / 10 ** 6
+final_pred = int(np.round(tracker.predict(35, newton=False), -3)) / 10 ** 6
 
 col1, col2, col3 = st.columns(3)
 

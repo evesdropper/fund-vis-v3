@@ -38,8 +38,8 @@ def predict(x, newton=True):
     lin_multiple.fit(X = df[["# Days", "# Days (Log)", "# Days^2"]], y = df["Fund"])
     shift = np.ceil(df["Fund"].iloc[-1] / 10 ** 6)
     if newton:
-        return lin_multiple.predict(x) - shift
-    return lin_multiple.predict(x)
+        return lin_multiple.predict([[x, np.log(x), np.square(x)]])[0] - (shift * (10 ** 6))
+    return lin_multiple.predict([[x, np.log(x), np.square(x)]])[0]
 
 def newton(f=predict, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35), tol=1/24):
     """
