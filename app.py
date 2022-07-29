@@ -18,10 +18,10 @@ checks = list(tracker.CHECKPOINTS.keys())
 
 end_day_num = np.ceil(mdates.date2num(utils.get_day()) - tracker.X_SHIFT)
 days = np.arange(0, 35, 1/1440) + 0.001
-pred_df = pd.DataFrame({"# Days": days, "# Days (Log)": np.log(days)})
+pred_df = pd.DataFrame({"# Days": days, "# Days (Log)": np.log(days), "# Days^2": np.square(days)})
 pred_df["Time"] = mdates.num2date(tracker.X_SHIFT + pred_df["# Days"])
 pred_df["Time"] = pred_df["Time"].dt.strftime("%Y-%m-%d %H:%M")
-pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)"]])
+pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)", "# Days^2"]])
 
 # plotting
 tr_realtime = go.Scatter(x=unique_funds["Time"], y=unique_funds["Fund"], mode="lines+markers", name="Fund Entries")

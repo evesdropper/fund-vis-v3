@@ -32,8 +32,9 @@ def predict(x):
     df = utils.sheet_to_df()
     df["# Days"] = mdates.datestr2num(df["Time"]) - X_SHIFT
     df["# Days (Log)"] = np.log(mdates.datestr2num(df["Time"]) - X_SHIFT)
+    df["# Days^2"] = np.square(mdates.datestr2num(df["Time"]) - X_SHIFT)
     lin_multiple = LinearRegression()
-    lin_multiple.fit(X = df[["# Days", "# Days (Log)"]], y = df["Fund"])
+    lin_multiple.fit(X = df[["# Days", "# Days (Log)", "# Days^2"]], y = df["Fund"])
     return lin_multiple.predict(x)
 
 def linreg_func(x):
@@ -46,7 +47,7 @@ def linreg_func(x):
     lin_multiple = LinearRegression()
     lin_multiple.fit(X = df[["# Days", "# Days (Log)"]], y = df["Fund"])
     shift=np.ceil(df["Fund"].iloc[-1] / 10 ** 6)
-    return lin_multiple.coef_.T @ np.array([x, np.log(x)]) + lin_multiple.intercept_ - (shift * 10 ** 6) 
+    return lin_multiple.coef_.T @ np.array([x, np.log(x), np.square(x)]) + lin_multiple.intercept_ - (shift * 10 ** 6) 
 
 def newton(f=linreg_func, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35), tol=1/24):
     """
