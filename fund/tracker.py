@@ -48,13 +48,16 @@ def linreg_func(x):
     shift=np.ceil(df["Fund"].iloc[-1] / 10 ** 6)
     return lin_multiple.coef_.T @ np.array([x, np.log(x)]) + lin_multiple.intercept_ - (shift * 10 ** 6) 
 
-def newton(f=linreg_func, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=35, tol=1/24):
+def newton(f=linreg_func, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35), tol=1/24):
     """
     Modified Newton's Method. Modified from MATLAB code from Math 128A PA1.
     """
     w, i = 1, 1
+    # print(' n a b p f(p) \n')
+    # print('--------------\n')
     while i < 100:
         p = a + (w * f(a) * (a - b)) / (f(b) - w * f(a))
+        # print(i, a, b, p, f(p))
         if f(p) * f(b) > 0:
             w = 1 / 2
         else:
