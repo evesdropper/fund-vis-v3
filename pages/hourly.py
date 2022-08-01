@@ -21,7 +21,7 @@ df_h = df.iloc[hourly.index]
 df_h["tnum"] = mdates.datestr2num(df_h["Time"])
 df_h["tnd"] = df_h["tnum"].diff()
 df_h["Diff"] = df_h["Fund"].diff()
-dfh_graph = df_h[df_h["tnd"].between(0.95/24, 1.05/24)].dropna()
+dfh_graph = df_h[df_h["tnd"].between(0.9/24, 1.1/24)].dropna()
 avg_change = dfh_graph["Diff"].mean()
 
 trace = go.Scatter(x=dfh_graph["Time"], y=dfh_graph["Diff"], mode="lines+markers", name="Change in Past Hour")
