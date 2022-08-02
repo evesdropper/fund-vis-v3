@@ -49,7 +49,7 @@ cdelta = (mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=dat
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.metric(label="Next Checkpoint", value=f"{tracker.CHECKPOINTS[np.ceil(df.iloc[-1, 1] / 10 ** 6)]}")
+    st.metric(label="Next Checkpoint", value=f"{tracker.CHECKPOINTS.get(np.ceil(df.iloc[-1, 1] / 10 ** 6), "N/A")}")
 
 with col2:
     st.metric(label="Est. Time To Reach", value=f"{tracker.tdelta_format(cdelta)}")
