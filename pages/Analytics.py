@@ -47,14 +47,17 @@ with col3:
 
 st.header("Checkpoint Info")
 
-cdelta = (mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
-
+if cfund < 15:
+    cdelta = tracker.tdelta_format(mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
+else:
+    cdelta = "N/A"
+    
 col1, col2, col3 = st.columns(3)
 with col1:
     st.metric(label="Next Checkpoint", value=f"{tracker.CHECKPOINTS.get(np.ceil(df.iloc[-1, 1] / 10 ** 6), 'N/A')}")
 
 with col2:
-    st.metric(label="Est. Time To Reach", value=f"{tracker.tdelta_format(cdelta) if cfund < 15 else 'N/A'}")
+    st.metric(label="Est. Time To Reach", value=f"{cdelta}")
 
 with col3:
     st.metric(label="Est. End Checkpoint", value=f"{tracker.CHECKPOINTS[min(np.floor(final_pred), 15)]}")
