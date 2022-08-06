@@ -15,7 +15,8 @@ def sheet_to_df(url=tracker.DATA_URL, colnames=["Time", "Fund"]):
     Tonk fund sheet go csv go df go brr
     """
     as_csv = url.replace("/edit#gid=", "/export?format=csv&gid=")
-    return pd.read_csv(as_csv, names=colnames, header=None)
+    df = pd.read_csv(as_csv, names=colnames, header=None)
+    return df.dropna()
 
 def get_day():
     """
