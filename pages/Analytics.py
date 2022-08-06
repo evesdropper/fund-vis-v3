@@ -34,8 +34,10 @@ final_pred = int(np.round(tracker.predict(35, newton=False), -3)) / 10 ** 6
 
 col1, col2, col3 = st.columns(3)
 
+cfund = df.iloc[-1, 1] / 10 ** 6
+
 with col1:
-    st.metric(label="Current Fund", value=f"{df.iloc[-1, 1] / 10 ** 6}M", delta=f"{(unique_funds.iloc[-1, 1] - unique_funds.iloc[-2, 1]) / 10 ** 3}K")
+    st.metric(label="Current Fund", value=f"{cfund}M", delta=f"{(unique_funds.iloc[-1, 1] - unique_funds.iloc[-2, 1]) / 10 ** 3}K")
 
 with col2:
     st.metric(label="Change in Past 24 Hours", value=f"{inc_24}K", delta=f"{inc_24_pct}%")
@@ -52,7 +54,7 @@ with col1:
     st.metric(label="Next Checkpoint", value=f"{tracker.CHECKPOINTS.get(np.ceil(df.iloc[-1, 1] / 10 ** 6), 'N/A')}")
 
 with col2:
-    st.metric(label="Est. Time To Reach", value=f"{tracker.tdelta_format(cdelta)}")
+    st.metric(label="Est. Time To Reach", value=f"{tracker.tdelta_format(cdelta) if cfund < 15 else 'N/A'}")
 
 with col3:
     st.metric(label="Est. End Checkpoint", value=f"{tracker.CHECKPOINTS[min(np.floor(final_pred), 15)]}")
