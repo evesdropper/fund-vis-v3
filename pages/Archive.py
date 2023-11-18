@@ -9,7 +9,7 @@ from fund import utils, tracker
 
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
-st.set_page_config(page_title="Archive")
+st.set_page_config(layout="wide", page_title="Archive")
 st.title('Past Tanki Fund Archive')
 st.write("Plots and data for past Tanki Funds will be located here.")
 
