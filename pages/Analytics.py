@@ -13,6 +13,7 @@ sys.path.insert(1, os.getcwd())
 
 st.set_page_config(page_title="Analytics")
 st.title('Fund Analytics')
+st.info("Note: fund data has just started collecting; analytics may be broken as there is not enough data.")
 
 df = utils.sheet_to_df()
 unique_funds = df.sort_values("Time", ascending=True).drop_duplicates(subset=["Fund"]).sort_values("Fund", ascending=True)
