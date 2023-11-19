@@ -21,12 +21,12 @@ days = np.arange(0, 35, 1/1440) + 0.001
 pred_df = pd.DataFrame({"# Days": days, "# Days (Log)": np.log(days), "# Days^2": np.square(days)})
 pred_df["Time"] = mdates.num2date(tracker.X_SHIFT + pred_df["# Days"])
 pred_df["Time"] = pred_df["Time"].dt.strftime("%Y-%m-%d %H:%M")
-# pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)", "# Days^2"]], multi=True)
-#
+pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)", "# Days^2"]], multi=True)
+
 # plotting
 tr_realtime = go.Scatter(x=unique_funds["Time"], y=unique_funds["Fund"], mode="lines+markers", name="Fund Entries")
-# tr_prediction = go.Scatter(x=pred_df["Time"], y=pred_df["Predicted"], mode="lines", name="Predicted Fund", line = dict(color='grey'))
-fig = go.Figure(tr_realtime)
+tr_prediction = go.Scatter(x=pred_df["Time"], y=pred_df["Predicted"], mode="lines", name="Predicted Fund", line = dict(color='grey'))
+fig = go.Figure([tr_realtime])
 
 # Checklines
 for check in checks:
