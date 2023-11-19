@@ -40,7 +40,12 @@ def predict(x, newton=True, multi=None):
     df["# Days^2"] = np.square(mdates.datestr2num(df["Time"]) - X_SHIFT)
     lin_multiple = LinearRegression()
     lin_multiple.fit(X = df[["# Days", "# Days (Log)", "# Days^2"]], y = df["Fund"])
-    shift = np.ceil(df["Fund"].iloc[-1] / 10 ** 6)
+    # get checkpoint information
+    checknums = list(CHECKPOINTS.keys())
+    idx = 0
+    while checknums[idx] < df.iloc[-1, 1] / 10 ** 6:
+        idx += 1
+    shift = checknums[idx]
     if multi:
         return lin_multiple.predict(x)
     elif newton:
