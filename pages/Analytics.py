@@ -97,4 +97,5 @@ try:
     daily_final = df_d[["Day", "Diff", "% Change"]].set_index("Day")
     st.dataframe(data=daily_final)
 except:
+    st.write("Coming soon!")
     pass
