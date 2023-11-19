@@ -12,7 +12,7 @@ st.header("2023 - Winter Major")
 
 # obtain and clean data
 df = utils.sheet_to_df()
-unique_funds = df.sort_values("Time", ascending=True).drop_duplicates(subset=["Fund"]).sort_values("Fund", ascending=True)
+unique_funds = df[df["Fund"] != 0].sort_values("Time", ascending=True).drop_duplicates(subset=["Fund"]).sort_values("Fund", ascending=True)
 ymax = df["Fund"].max()
 checks = list(tracker.CHECKPOINTS.keys())
 
