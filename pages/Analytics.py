@@ -62,10 +62,10 @@ while checknums[idx] < cfund:
     idx += 1
 next_checkpoint = tracker.CHECKPOINTS[checknums[idx]]
 
-if cfund < max(tracker.CHECKPOINTS.keys()):
-    cdelta = tracker.tdelta_format(mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
-else:
+if cfund >= max(tracker.CHECKPOINTS.keys()) or final_pred_value == "N/A":
     cdelta = "N/A"
+else:
+    cdelta = tracker.tdelta_format(mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
 
 col1, col2, col3 = st.columns(3)
 with col1:
