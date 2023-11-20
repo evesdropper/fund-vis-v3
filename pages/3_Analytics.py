@@ -70,8 +70,10 @@ final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx]]
 
 cur_day_num = np.ceil(mdates.date2num(utils.get_day()) - tracker.X_SHIFT)
 next_week_pred = int(np.round(tracker.predict(cur_day_num + 7, newton=False), -3)) / 10 ** 6
-if cfund >= max(tracker.CHECKPOINTS.keys()) or int(next_week_pred) <= checknums[idx]:
+if cfund >= max(tracker.CHECKPOINTS.keys()):
     cdelta = "N/A"
+elif int(next_week_pred) <= checknums[idx]:
+    cdelta = ">1w"
 else:
     cdelta = tracker.tdelta_format(mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
 
