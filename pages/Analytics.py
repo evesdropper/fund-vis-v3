@@ -13,7 +13,6 @@ sys.path.insert(1, os.getcwd())
 
 st.set_page_config(page_title="Analytics")
 st.title('Fund Analytics')
-st.info("Note: fund data has just started collecting; analytics may be broken as there is not enough data.")
 
 df = utils.sheet_to_df()
 unique_funds = df.sort_values("Time", ascending=True).drop_duplicates(subset=["Fund"]).sort_values("Fund", ascending=True)
@@ -103,6 +102,9 @@ try:
     df_d["% Change"] = df_d["% Change"].apply(str)
     df_d["% Change"] = df_d["% Change"].apply(utils.format_percent)
     daily_final = df_d[["Day", "Diff", "% Change"]].set_index("Day")
+    # for w23 only:
+    st.info("Note: fund data was not collected on the first day, so the first two days' daily changes are not completely accurate.")
+    # END for w23 only
     st.dataframe(data=daily_final)
 except:
     st.write("Coming soon!")
