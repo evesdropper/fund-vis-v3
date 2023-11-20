@@ -11,7 +11,7 @@ sys.path.insert(1, os.getcwd())
 Utils
 """
 
-@st.cache_data
+@st.cache_data(ttl=1800)
 def sheet_to_df(url=tracker.DATA_URL, colnames=["Time", "Fund"]):
     """
     Tonk fund sheet go csv go df go brr
