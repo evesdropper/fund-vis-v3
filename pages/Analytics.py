@@ -62,6 +62,11 @@ while checknums[idx] < cfund:
     idx += 1
 next_checkpoint = tracker.CHECKPOINTS[checknums[idx]]
 
+final_idx = 0
+while checknums[final_idx] < final_pred:
+    final_idx += 1
+final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx]]
+
 cur_day_num = np.ceil(mdates.date2num(utils.get_day()) - tracker.X_SHIFT)
 next_week_pred = int(np.round(tracker.predict(cur_day_num + 7, newton=False), -3)) / 10 ** 6
 if cfund >= max(tracker.CHECKPOINTS.keys()) or int(next_week_pred) <= checknums[idx]:
@@ -82,7 +87,7 @@ with st.spinner('Loading Checkpoint Information...'):
         if final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
             final_checkpoint = "N/A"
         else:
-            final_checkpoint = f"{tracker.CHECKPOINTS[min(np.floor(final_pred), max(tracker.CHECKPOINTS.keys()))]}"
+            final_checkpoint = f"{tracker.CHECKPOINTS[min(checknums[final_idx], max(tracker.CHECKPOINTS.keys()))]}"
         st.metric(label="Est. End Checkpoint", value=final_checkpoint)
 
 st.header("Fund Daily Changes")
@@ -94,7 +99,6 @@ try:
     df_d = df.iloc[daily.index]
     df_d["Day"] = list(range(1, df_d.shape[0] + 1))
     df_d["Diff"] = np.round(df_d["Fund"].diff(), -1).fillna(0).astype(int)
-    df_d.loc[55, "Diff"] = df_d.loc[55, "Fund"].astype(int)
     df_d["% Change"] = np.round(df_d["Diff"].pct_change().fillna(0) * 100, 3)
     df_d["% Change"] = df_d["% Change"].apply(str)
     df_d["% Change"] = df_d["% Change"].apply(utils.format_percent)
