@@ -62,3 +62,45 @@ fig.update_layout(
 )
 with st.spinner('Loading Data...'):
     st.plotly_chart(fig, use_container_width=True, height=600)
+
+hourly = df["Time"].str.extract(rf'(:0[012])').dropna()
+
+# draw time series
+df_h = df.iloc[hourly.index]
+df_h["tnum"] = mdates.datestr2num(df_h["Time"])
+df_h["tnd"] = df_h["tnum"].diff()
+df_h["Diff"] = df_h["Fund"].diff()
+dfh_graph = df_h[df_h["tnd"].between(0.9/24, 1.1/24)].dropna()
+avg_change = dfh_graph["Diff"].mean()
+
+trace = go.Scatter(x=dfh_graph["Time"], y=dfh_graph["Diff"], mode="lines+markers", name="Change in Past Hour")
+fig = go.Figure([trace])
+
+# avg
+fig.add_hline(y=avg_change, line_color="gray", annotation_text=f"Avg Hourly Change: {np.round(avg_change, -2) / 10 ** 3}k")
+
+# Notes
+fig.add_vrect(x0="2022-07-04 02:00", x1="2022-07-04 17:33", fillcolor="red", opacity=0.2, line_width=0)
+fig.add_vrect(x0="2022-07-14 18:30", x1="2022-07-16 03:30", fillcolor="red", opacity=0.2, line_width=0)
+
+# layout
+fig.update_xaxes(range=[S22_START_DATE, S22_END_DATE], rangeslider_visible=True,
+    rangeselector=dict(
+        buttons=list([
+            dict(count=1, label="1d", step="day", stepmode="backward"),
+            dict(count=3, label="3d", step="day", stepmode="backward"),
+            dict(count=7, label="1w", step="day", stepmode="backward"),
+            dict(step="all")
+        ]))
+)
+fig.update_yaxes(range=[0, dfh_graph["Diff"].max() * 1.2])
+fig.update_layout(
+    title={"text": "Tanki Fund Hourly Changes", 'x':0.5, 'xanchor': 'center'},
+    xaxis_title="Time (UTC)",
+    yaxis_title="Change Since Past Hour",
+    legend_title="Legend",
+    showlegend = True,
+    height=600,
+)
+with st.spinner('Loading Data...'):
+    st.plotly_chart(fig, use_container_width=True, height=600)

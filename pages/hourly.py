@@ -15,8 +15,6 @@ st.title('Fund Hourly Changes')
 # get data
 df = utils.sheet_to_df()
 hourly = df["Time"].str.extract(rf'(:0[012])').dropna()
-print(hourly)
-print(hourly.index)
 
 # draw time series
 df_h = df.iloc[hourly.index]
