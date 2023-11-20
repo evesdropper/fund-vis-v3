@@ -70,18 +70,20 @@ else:
     cdelta = tracker.tdelta_format(mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
 
 col1, col2, col3 = st.columns(3)
-with col1:
-    st.metric(label="Next Checkpoint", value=next_checkpoint)
 
-with col2:
-    st.metric(label="Est. Time To Reach", value=f"{cdelta}")
+with st.spinner('Loading Checkpoint Information...'):
+    with col1:
+        st.metric(label="Next Checkpoint", value=next_checkpoint)
 
-with col3:
-    if final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
-        final_checkpoint = "N/A"
-    else:
-        final_checkpoint = f"{tracker.CHECKPOINTS[min(np.floor(final_pred), max(tracker.CHECKPOINTS.keys()))]}"
-    st.metric(label="Est. End Checkpoint", value=final_checkpoint)
+    with col2:
+        st.metric(label="Est. Time To Reach", value=f"{cdelta}")
+
+    with col3:
+        if final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
+            final_checkpoint = "N/A"
+        else:
+            final_checkpoint = f"{tracker.CHECKPOINTS[min(np.floor(final_pred), max(tracker.CHECKPOINTS.keys()))]}"
+        st.metric(label="Est. End Checkpoint", value=final_checkpoint)
 
 st.header("Fund Daily Changes")
 
