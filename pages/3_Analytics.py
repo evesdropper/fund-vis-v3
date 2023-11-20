@@ -22,6 +22,7 @@ cur_time, cur_fund = df.iloc[-1]
 st.write(f"Last Updated: {cur_time}")
 
 st.header("At a Glance")
+st.caption("Final Prediction may be extreme with little data at first; a value of N/A will be put in place of values that are either negative or severely infeasible.")
 
 # diffing
 df_h = df.iloc[hourly.index]
@@ -53,7 +54,7 @@ with col3:
     st.metric(label="Estimated Final Fund", value=final_pred_value)
 
 st.header("Checkpoint Info")
-st.info("Note: Estimated end checkpoint denotes the estimated major checkpoint; we don't care about Mono Apple in this household.")
+st.caption("Estimated end checkpoint denotes the estimated major checkpoint; we don't care about Mono Apple in this household.")
 
 # get checkpoint information
 checknums = list(tracker.CHECKPOINTS.keys())
