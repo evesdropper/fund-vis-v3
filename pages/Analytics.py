@@ -27,7 +27,7 @@ st.header("At a Glance")
 # diffing
 df_h = df.iloc[hourly.index]
 df_h["Diff"] = df_h["Fund"].diff(periods=24)
-df_h["% Change"] = df_h["Diff"].pct_change(periods=24)
+df_h["% Change"] = df_h["Diff"].pct_change()
 dfh_upd = df_h.dropna()
 inc_24 = int(dfh_upd.iloc[-1, 2]) / 10 ** 3
 inc_24_pct = str(np.round(dfh_upd.iloc[-1, 3] * 100, 3))
