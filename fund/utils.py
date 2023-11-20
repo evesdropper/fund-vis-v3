@@ -1,6 +1,7 @@
 import os, sys, glob
 import datetime
 import pandas as pd
+import streamlit as st
 from fund import tracker
 
 # insert at 1, 0 is the script path (or '' in REPL)
@@ -10,6 +11,7 @@ sys.path.insert(1, os.getcwd())
 Utils
 """
 
+@st.cache_data
 def sheet_to_df(url=tracker.DATA_URL, colnames=["Time", "Fund"]):
     """
     Tonk fund sheet go csv go df go brr
