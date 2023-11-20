@@ -46,7 +46,7 @@ with col2:
         st.metric(label="Change in Past 24 Hours", value="N/A", delta="N/A")
 
 with col3:
-    if final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
+    if final_pred < 0 or final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
         final_pred_value = "N/A"
     else: 
         final_pred_value = f"{final_pred}M"
@@ -84,7 +84,7 @@ with st.spinner('Loading Checkpoint Information...'):
         st.metric(label="Est. Time To Reach", value=f"{cdelta}")
 
     with col3:
-        if final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
+        if final_pred < 0 or final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
             final_checkpoint = "N/A"
         else:
             final_checkpoint = f"{tracker.CHECKPOINTS[min(checknums[final_idx], max(tracker.CHECKPOINTS.keys()))]}"
