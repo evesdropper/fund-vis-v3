@@ -53,6 +53,7 @@ with col3:
     st.metric(label="Estimated Final Fund", value=final_pred_value)
 
 st.header("Checkpoint Info")
+st.info("Note: Estimated end checkpoint denotes the estimated major checkpoint; we don't care about Mono Apple in this household.")
 
 # get checkpoint information
 checknums = list(tracker.CHECKPOINTS.keys())
