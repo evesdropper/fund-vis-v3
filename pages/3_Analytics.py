@@ -66,7 +66,7 @@ next_checkpoint = tracker.CHECKPOINTS[checknums[idx]]
 final_idx = 0
 while checknums[final_idx] < final_pred:
     final_idx += 1
-final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx]]
+final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx-1]]
 
 cur_day_num = np.ceil(mdates.date2num(utils.get_day()) - tracker.X_SHIFT)
 next_week_pred = int(np.round(tracker.predict(cur_day_num + 7, newton=False), -3)) / 10 ** 6
@@ -90,7 +90,7 @@ with st.spinner('Loading Checkpoint Information...'):
         if final_pred < 0 or final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
             final_checkpoint = "N/A"
         else:
-            final_checkpoint = f"{tracker.CHECKPOINTS[min(checknums[final_idx], max(tracker.CHECKPOINTS.keys()))]}"
+            final_checkpoint = f"{tracker.CHECKPOINTS[min(checknums[final_idx-1], max(tracker.CHECKPOINTS.keys()))]}"
         st.metric(label="Est. End Checkpoint", value=final_checkpoint)
 
 st.header("Fund Daily Changes")
