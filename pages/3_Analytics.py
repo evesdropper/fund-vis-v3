@@ -37,6 +37,9 @@ col1, col2, col3 = st.columns(3)
 
 cfund = df.iloc[-1, 1] / 10 ** 6
 
+if inc_24 > 1000:
+    st.info("The fund is growing quickly right now!", icon="📈")
+
 with col1:
     st.metric(label="Current Fund", value=f"{cfund}M", delta=f"{(unique_funds.iloc[-1, 1] - unique_funds.iloc[-2, 1]) / 10 ** 3}K")
 
@@ -52,6 +55,7 @@ with col3:
     else: 
         final_pred_value = f"{final_pred}M"
     st.metric(label="Estimated Final Fund", value=final_pred_value)
+
 
 st.header("Checkpoint Info")
 st.caption("Estimated end checkpoint denotes the estimated major checkpoint; we don't care about Mono Apple in this household.")
@@ -75,9 +79,13 @@ if cfund >= max(tracker.CHECKPOINTS.keys()):
 elif int(next_week_pred) <= checknums[idx]:
     cdelta = ">1w"
 else:
-    cdelta = tracker.tdelta_format(mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc))
+    cdelta_raw = mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc)
+    cdelta = tracker.tdelta_format(cdelta_raw)
 
 col1, col2, col3 = st.columns(3)
+
+if cdelta_raw.total_seconds() < 12 * 3600:
+    st.info("We are about to hit the next checkpoint soon!", icon="🔥")
 
 with st.spinner('Loading Checkpoint Information...'):
     with col1:
