@@ -36,12 +36,13 @@ final_pred = int(np.round(tracker.predict(30, newton=False), -3)) / 10 ** 6
 col1, col2, col3 = st.columns(3)
 
 cfund = df.iloc[-1, 1] / 10 ** 6
+cfund_delta = (unique_funds.iloc[-1, 1] - unique_funds.iloc[-2, 1]) / 10 ** 3
 
-if inc_24 > 1000:
+if inc_24 > 1000 and float(inc_24_pct) > 10:
     st.info("The fund is growing quickly right now!", icon="📈")
 
 with col1:
-    st.metric(label="Current Fund", value=f"{cfund}M", delta=f"{(unique_funds.iloc[-1, 1] - unique_funds.iloc[-2, 1]) / 10 ** 3}K")
+    st.metric(label="Current Fund", value=f"{cfund}M", delta=f"{cfund_delta}K")
 
 with col2:
     try:
