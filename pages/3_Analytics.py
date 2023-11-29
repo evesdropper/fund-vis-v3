@@ -73,6 +73,8 @@ while checknums[final_idx] < final_pred:
     final_idx += 1
 final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx-1]]
 
+col1, col2, col3 = st.columns(3)
+
 cur_day_num = np.ceil(mdates.date2num(utils.get_day()) - tracker.X_SHIFT)
 next_week_pred = int(np.round(tracker.predict(cur_day_num + 7, newton=False), -3)) / 10 ** 6
 if cfund >= max(tracker.CHECKPOINTS.keys()):
@@ -82,11 +84,8 @@ elif int(next_week_pred) <= checknums[idx]:
 else:
     cdelta_raw = mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc)
     cdelta = tracker.tdelta_format(cdelta_raw)
-
-col1, col2, col3 = st.columns(3)
-
-if cdelta_raw.total_seconds() < 12 * 3600:
-    st.info("We are about to hit the next checkpoint soon!", icon="🔥")
+    if cdelta_raw.total_seconds() < 12 * 3600:
+        st.info("We are about to hit the next checkpoint soon!", icon="🔥")
 
 with st.spinner('Loading Checkpoint Information...'):
     with col1:
