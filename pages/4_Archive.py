@@ -23,7 +23,7 @@ S22_DATA_URL = "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdO
 
 W23_START_DATE = datetime.datetime.strptime("2023-11-17 2:00", "%Y-%m-%d %H:%M")
 W23_END_DATE = datetime.datetime.strptime("2023-12-20 2:00", "%Y-%m-%d %H:%M")
-W23_X_SHIFT = mdates.date2num(START_DATE)
+W23_X_SHIFT = mdates.date2num(W23_START_DATE)
 W23_CHECKPOINTS = {1: "Nuclear Energy", 2: "Module Slot", 10: "Gauss GT",
                11: "Nuclear Energy", 20: "Freeze GT",
                21: "Nuclear Energy", 30: "Hunter GT", 
