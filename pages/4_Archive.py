@@ -112,6 +112,7 @@ def generate_hourly_fig(event, data_url, checkpoints, start_date, end_date, x_sh
       showlegend = True,
       height=600,
   )
+  return fig
 
 s22_main_fig = generate_main_fig("S22", S22_DATA_URL, S22_CHECKPOINTS, S22_START_DATE, S22_END_DATE, S22_X_SHIFT,
                                  [["2022-07-04 02:00", "2022-07-04 17:33"], ["2022-07-14 18:30", "2022-07-16 03:30"]])
