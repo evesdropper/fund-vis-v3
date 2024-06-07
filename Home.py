@@ -8,7 +8,7 @@ from fund import utils, tracker
 st.set_page_config(layout="wide", page_title="Tanki Fund Tracker")
 
 st.title('Tanki Fund Tracker')
-st.header("2023 - Winter Major")
+st.header("2024 - Summer Major")
 
 # obtain and clean data
 df = utils.sheet_to_df()
