@@ -114,6 +114,8 @@ def generate_hourly_fig(event, data_url, checkpoints, start_date, end_date, x_sh
   )
   return fig
 
+# s22 archive
+st.header("2022 - Summer Major")
 s22_main_fig = generate_main_fig("S22", S22_DATA_URL, S22_CHECKPOINTS, S22_START_DATE, S22_END_DATE, S22_X_SHIFT,
                                  [["2022-07-04 02:00", "2022-07-04 17:33"], ["2022-07-14 18:30", "2022-07-16 03:30"]])
 with st.spinner('Loading Data...'):
@@ -123,3 +125,14 @@ s22_hourly_fig = generate_hourly_fig("S22", S22_DATA_URL, S22_CHECKPOINTS, S22_S
                                  [["2022-07-04 02:00", "2022-07-04 17:33"], ["2022-07-14 18:30", "2022-07-16 03:30"]])
 with st.spinner('Loading Data...'):
     st.plotly_chart(s22_hourly_fig, use_container_width=True, height=600)
+
+# w23 archive
+w23_main_fig = generate_main_fig("W23", W23_DATA_URL, W23_CHECKPOINTS, W23_START_DATE, W23_END_DATE, W23_X_SHIFT,
+                                 [["2023-11-17 02:00", "2023-11-18 17:37"], ["2023-11-20 06:30", "2023-11-21 09:00"]])
+with st.spinner('Loading Data...'):
+    st.plotly_chart(w23_main_fig, use_container_width=True, height=600)
+  
+w23_hourly_fig = generate_main_fig("W23", W23_DATA_URL, W23_CHECKPOINTS, W23_START_DATE, W23_END_DATE, W23_X_SHIFT,
+                                 [["2023-11-17 02:00", "2023-11-18 17:37"], ["2023-11-20 06:30", "2023-11-21 09:00"]])
+with st.spinner('Loading Data...'):
+    st.plotly_chart(w23_hourly_fig, use_container_width=True, height=600)
