@@ -121,4 +121,4 @@ with st.spinner('Loading Data...'):
 s22_hourly_fig = generate_hourly_fig("S22", S22_DATA_URL, S22_CHECKPOINTS, S22_START_DATE, S22_END_DATE, S22_X_SHIFT,
                                  [["2022-07-04 02:00", "2022-07-04 17:33"], ["2022-07-14 18:30", "2022-07-16 03:30"]])
 with st.spinner('Loading Data...'):
-    st.plotly_chart(fig, use_container_width=True, height=600)
+    st.plotly_chart(s22_hourly_fig, use_container_width=True, height=600)
