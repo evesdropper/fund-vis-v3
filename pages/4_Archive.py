@@ -127,12 +127,13 @@ with st.spinner('Loading Data...'):
     st.plotly_chart(s22_hourly_fig, use_container_width=True, height=600)
 
 # w23 archive
+st.header("2023 - Winter Major")
 w23_main_fig = generate_main_fig("W23", W23_DATA_URL, W23_CHECKPOINTS, W23_START_DATE, W23_END_DATE, W23_X_SHIFT,
                                  [["2023-11-17 02:00", "2023-11-18 17:37"], ["2023-11-20 06:30", "2023-11-21 09:00"]])
 with st.spinner('Loading Data...'):
     st.plotly_chart(w23_main_fig, use_container_width=True, height=600)
   
-w23_hourly_fig = generate_main_fig("W23", W23_DATA_URL, W23_CHECKPOINTS, W23_START_DATE, W23_END_DATE, W23_X_SHIFT,
+w23_hourly_fig = generate_hourly_fig("W23", W23_DATA_URL, W23_CHECKPOINTS, W23_START_DATE, W23_END_DATE, W23_X_SHIFT,
                                  [["2023-11-17 02:00", "2023-11-18 17:37"], ["2023-11-20 06:30", "2023-11-21 09:00"]])
 with st.spinner('Loading Data...'):
     st.plotly_chart(w23_hourly_fig, use_container_width=True, height=600)
