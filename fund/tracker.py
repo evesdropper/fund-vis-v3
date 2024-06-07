@@ -16,7 +16,7 @@ CHECKPOINTS = {1: "Nuclear Energy", 2: "Module Slot",
                11: "Shaft Jamming Sight", 12: "Nuclear Energy", 13: "Crisis", 15: "Magnum Freezing Core", 17: "Armadillo", 19: "Vulcan Freezing Band",
                21: "Twins GT", 23: "Smoky Hyperspeed Rounds", 25: "Legendary Key", 27: "Mammoth GT", 29: "Firebird Critical Mix", 30: "3 Legendary Keys"
               }
-DATA_URL = "https://docs.google.com/spreadsheets/d/1GiJQvvwp9cGWyRom5x6gc8qUjgUL2ONWyKfewBVY6sA/edit#gid=0"
+DATA_URL = "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/edit#gid=1900607599"
 
 def regression(log=None):
     """
