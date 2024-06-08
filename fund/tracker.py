@@ -37,6 +37,7 @@ def predict(x, newton=True, multi=None):
     df["# Days"] = mdates.datestr2num(df["Time"]) - X_SHIFT
     df["# Days (Log)"] = np.log(mdates.datestr2num(df["Time"]) - X_SHIFT)
     df["# Days^2"] = np.square(mdates.datestr2num(df["Time"]) - X_SHIFT)
+    print(df)
     lin_multiple = LinearRegression()
     lin_multiple.fit(X = df[["# Days", "# Days (Log)"]], y = df["Fund"])
     # get checkpoint information

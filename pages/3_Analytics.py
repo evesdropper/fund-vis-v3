@@ -29,8 +29,13 @@ df_h = df.iloc[hourly.index]
 df_h["Diff"] = df_h["Fund"].diff(periods=24)
 df_h["% Change"] = df_h["Diff"].pct_change()
 dfh_upd = df_h.dropna()
-inc_24 = int(dfh_upd.iloc[-1, 2]) / 10 ** 3
-inc_24_pct = str(np.round(dfh_upd.iloc[-1, 3] * 100, 3))
+
+try: 
+    inc_24 = int(dfh_upd.iloc[-1, 2]) / 10 ** 3
+    inc_24_pct = str(np.round(dfh_upd.iloc[-1, 3] * 100, 3))
+except:
+    inc_24, inc_24_pct = None, None 
+
 final_pred = int(np.round(tracker.predict(30, newton=False), -3)) / 10 ** 6
 
 col1, col2, col3 = st.columns(3)
@@ -38,16 +43,16 @@ col1, col2, col3 = st.columns(3)
 cfund = df.iloc[-1, 1] / 10 ** 6
 cfund_delta = (unique_funds.iloc[-1, 1] - unique_funds.iloc[-2, 1]) / 10 ** 3
 
-if inc_24 > 1000 and float(inc_24_pct) > 10:
+if inc_24 and inc_24 > 1000 and float(inc_24_pct) > 10:
     st.info("The fund is growing quickly right now!", icon="📈")
 
 with col1:
     st.metric(label="Current Fund", value=f"{cfund}M", delta=f"{cfund_delta}K")
 
 with col2:
-    try:
+    if inc_24 and inc_24_pct:
         st.metric(label="Change in Past 24 Hours", value=f"{inc_24}K", delta=f"{inc_24_pct}%")
-    except:
+    else:
         st.metric(label="Change in Past 24 Hours", value="N/A", delta="N/A")
 
 with col3:
@@ -69,9 +74,12 @@ while checknums[idx] < cfund:
 next_checkpoint = tracker.CHECKPOINTS[checknums[idx]]
 
 final_idx = 0
-while checknums[final_idx] < final_pred:
-    final_idx += 1
-final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx-1]]
+if final_pred > checknums[-1]:
+    final_checkpoint = tracker.CHECKPOINTS[checknums[-1]]
+else:
+    while checknums[final_idx] < final_pred:
+        final_idx += 1
+    final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx-1]]
 
 col1, col2, col3 = st.columns(3)
 
@@ -114,9 +122,6 @@ try:
     df_d["% Change"] = df_d["% Change"].apply(str)
     df_d["% Change"] = df_d["% Change"].apply(utils.format_percent)
     daily_final = df_d[["Day", "Diff", "% Change"]].set_index("Day")
-    # for w23 only:
-    st.info("Note: fund data was not collected on the first day, so the first two days' daily changes are not completely accurate.")
-    # END for w23 only
     st.dataframe(data=daily_final)
 except:
     st.write("Coming soon!")
