@@ -31,10 +31,6 @@ fig = go.Figure([trace])
 # avg
 fig.add_hline(y=avg_change, line_color="gray", annotation_text=f"Avg Hourly Change: {np.round(avg_change, -2) / 10 ** 3}k")
 
-# outages
-fig.add_vrect(x0="2023-11-17 02:00", x1="2023-11-18 17:37", fillcolor="red", opacity=0.2, line_width=0)
-fig.add_vrect(x0="2023-11-20 06:30", x1="2023-11-21 09:00", fillcolor="red", opacity=0.2, line_width=0)
-
 # layout
 fig.update_xaxes(range=[tracker.START_DATE, utils.get_day()], rangeslider_visible=True,
     rangeselector=dict(

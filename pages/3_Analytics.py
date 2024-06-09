@@ -116,12 +116,12 @@ try:
     daily = df["Time"].str.extract(rf'(\s2:0[012]|\s1:5[789])').dropna()
 # # draw time series
     df_d = df.iloc[daily.index]
-    df_d["Day"] = list(range(1, df_d.shape[0] + 1))
+    df_d["Day"] = list(range(df_d.shape[0]))
     df_d["Diff"] = np.round(df_d["Fund"].diff(), -1).fillna(0).astype(int)
     df_d["% Change"] = np.round(df_d["Diff"].pct_change().fillna(0) * 100, 3)
     df_d["% Change"] = df_d["% Change"].apply(str)
     df_d["% Change"] = df_d["% Change"].apply(utils.format_percent)
-    daily_final = df_d[["Day", "Diff", "% Change"]].set_index("Day")
+    daily_final = df_d[["Day", "Diff", "% Change"]].set_index("Day").iloc[1:]
     st.dataframe(data=daily_final)
 except:
     st.write("Coming soon!")
