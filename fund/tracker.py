@@ -37,7 +37,7 @@ def predict(x, newton=True, multi=None):
     df["# Days"] = mdates.datestr2num(df["Time"]) - X_SHIFT
     df["# Days (Log)"] = np.log(mdates.datestr2num(df["Time"]) - X_SHIFT)
     df["# Days^2"] = np.square(mdates.datestr2num(df["Time"]) - X_SHIFT)
-    print(df)
+    # print(df)
     lin_multiple = LinearRegression()
     lin_multiple.fit(X = df[["# Days", "# Days (Log)"]], y = df["Fund"])
     # get checkpoint information
@@ -57,11 +57,11 @@ def newton(f=predict, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=mi
     Modified Newton's Method. Modified from MATLAB code from Math 128A PA1.
     """
     w, i = 1, 1
-    print(' n a b p f(p) \n')
-    print('--------------\n')
+    # print(' n a b p f(p) \n')
+    # print('--------------\n')
     while i < 100:
         p = a + (w * f(a) * (a - b)) / (f(b) - w * f(a))
-        print(i, a, b, p, f(p))
+        # print(i, a, b, p, f(p))
         if f(p) * f(b) > 0:
             w = 1 / 2
         else:

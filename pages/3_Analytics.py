@@ -22,7 +22,7 @@ cur_time, cur_fund = df.iloc[-1]
 st.write(f"Last Updated: {cur_time}")
 
 st.header("At a Glance")
-st.caption("Final Prediction may be extreme with little data at first; a value of N/A will be put in place of values that are either negative or severely infeasible.")
+st.caption("Final Prediction may be extreme with little data at first; the value will be omitted for the beginning of the fund. In case of further extreme behavior, a value of N/A will be put in place of values that are either negative or severely infeasible.")
 
 # diffing
 df_h = df.iloc[hourly.index]
@@ -130,7 +130,10 @@ try:
     df_d["% Change"] = df_d["% Change"].apply(str)
     df_d["% Change"] = df_d["% Change"].apply(utils.format_percent)
     daily_final = df_d[["Day", "Diff", "% Change"]].set_index("Day").iloc[1:]
-    st.dataframe(data=daily_final)
+    if daily_final.size > 0:
+        st.dataframe(data=daily_final)
+    else:
+        st.write("Coming soon!")
 except:
     st.write("Coming soon!")
     pass

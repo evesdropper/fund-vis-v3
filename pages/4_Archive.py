@@ -10,8 +10,10 @@ from fund import utils, tracker
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
 st.set_page_config(layout="wide", page_title="Archive")
+
+ARCHIVE_URL = "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/"
 st.title('Past Tanki Fund Archive')
-st.write("Plots and data for past Tanki Funds will be located here.")
+st.write(f"Plots and data for past Tanki Funds will be located here. You can also find a backup of the data on [Google Sheets]({ARCHIVE_URL}).")
 
 S22_START_DATE = datetime.datetime.strptime("2022-07-04 2:00", "%Y-%m-%d %H:%M")
 S22_END_DATE = datetime.datetime.strptime("2022-08-08 2:00", "%Y-%m-%d %H:%M")
