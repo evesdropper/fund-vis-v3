@@ -25,11 +25,14 @@ pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)"]], mult
 
 # plotting
 tr_realtime = go.Scatter(x=unique_funds["Time"], y=unique_funds["Fund"], mode="lines+markers", name="Fund Entries")
-try: 
-    tr_prediction = go.Scatter(x=pred_df["Time"], y=pred_df["Predicted"], mode="lines", name="Predicted Fund", line = dict(color='grey'))
-    fig = go.Figure([tr_realtime, tr_prediction])
-except:
-    fig = go.Figure([tr_realtime])
+if False:
+    try: 
+        tr_prediction = go.Scatter(x=pred_df["Time"], y=pred_df["Predicted"], mode="lines", name="Predicted Fund", line = dict(color='grey'))
+        fig = go.Figure([tr_realtime, tr_prediction])
+    except:
+        fig = go.Figure([tr_realtime])
+
+fig = go.Figure([tr_realtime])
 
 # Checklines
 for check in checks:

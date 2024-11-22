@@ -10,13 +10,13 @@ from fund import utils
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
 
-START_DATE = datetime.datetime.strptime("2024-06-07 2:00", "%Y-%m-%d %H:%M")
+START_DATE = datetime.datetime.strptime("2024-11-22 2:00", "%Y-%m-%d %H:%M")
 X_SHIFT = mdates.date2num(START_DATE)
-CHECKPOINTS = {1: "Nuclear Energy", 2: "Module Slot",
-               11: "Shaft Jamming Sight", 12: "Nuclear Energy", 13: "Crisis", 15: "Magnum Freezing Core", 17: "Armadillo", 19: "Vulcan Freezing Band",
-               21: "Twins GT", 23: "Smoky Hyperspeed Rounds", 25: "Legendary Key", 27: "Mammoth GT", 29: "Firebird Critical Mix", 30: "3 Legendary Keys"
+CHECKPOINTS = {1: "Nuclear Energy", 2: "Grenades", 
+               11: "Striker Tandem", 12: "Nuclear Energy", 13: "Magnum Bombard", 15: "Armadillo", 17: "Isida Sustainable Nanobots", 19: "Magnum Destroyer", 
+               21: "Ricochet GT", 23: "Ricochet Pulsar", 25: "Legendary Key", 27: "Titan GT", 29: "Gauss Nemesis", 30: "3 Legendary Keys"
               }
-DATA_URL = "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/edit#gid=1900607599"
+DATA_URL = "https://docs.google.com/spreadsheets/d/1mGZVcTbSvR2KE648HvHHHW7Cyqn-qtjI6bEqTbkte-o/edit#gid=0"
 
 def regression(log=None):
     """
