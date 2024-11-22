@@ -66,55 +66,59 @@ with col3:
 st.header("Checkpoint Info")
 st.caption("Estimated end checkpoint denotes the estimated major checkpoint; we don't care about Mono Apple in this household.")
 
-# get checkpoint information
-checknums = list(tracker.CHECKPOINTS.keys())
-idx = 0
-while checknums[idx] < cfund:
-    idx += 1
-next_checkpoint = tracker.CHECKPOINTS[checknums[idx]]
+try:
+    # get checkpoint information
+    checknums = list(tracker.CHECKPOINTS.keys())
+    idx = 0
+    while checknums[idx] < cfund:
+        idx += 1
+    next_checkpoint = tracker.CHECKPOINTS[checknums[idx]]
 
-final_idx = 0
-if final_pred > checknums[-1]:
-    final_checkpoint = tracker.CHECKPOINTS[checknums[-1]]
-else:
-    while checknums[final_idx] < final_pred:
-        final_idx += 1
-    final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx-1]]
+    final_idx = 0
+    if final_pred > checknums[-1]:
+        final_checkpoint = tracker.CHECKPOINTS[checknums[-1]]
+    else:
+        while checknums[final_idx] < final_pred:
+            final_idx += 1
+        final_checkpoint = tracker.CHECKPOINTS[checknums[final_idx-1]]
 
-col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
 
-cur_day_num = np.ceil(mdates.date2num(utils.get_day()) - tracker.X_SHIFT)
-next_week_pred = int(np.round(tracker.predict(cur_day_num + 7, newton=False), -3)) / 10 ** 6
-if cfund >= max(tracker.CHECKPOINTS.keys()):
-    cdelta = "N/A"
-elif int(next_week_pred) <= checknums[idx]:
-    cdelta = ">1w"
-else:
-    cdelta_raw = mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc)
-    cdelta = tracker.tdelta_format(cdelta_raw)
-    if cdelta_raw.total_seconds() < 12 * 3600:
-        st.info("We are about to hit the next checkpoint soon!", icon="🔥")
+    cur_day_num = np.ceil(mdates.date2num(utils.get_day()) - tracker.X_SHIFT)
+    next_week_pred = int(np.round(tracker.predict(cur_day_num + 7, newton=False), -3)) / 10 ** 6
+    if cfund >= max(tracker.CHECKPOINTS.keys()):
+        cdelta = "N/A"
+    elif int(next_week_pred) <= checknums[idx]:
+        cdelta = ">1w"
+    else:
+        cdelta_raw = mdates.num2date(tracker.newton() + tracker.X_SHIFT).replace(tzinfo=datetime.timezone.utc) - datetime.datetime.now().replace(tzinfo=datetime.timezone.utc)
+        cdelta = tracker.tdelta_format(cdelta_raw)
+        if cdelta_raw.total_seconds() < 12 * 3600:
+            st.info("We are about to hit the next checkpoint soon!", icon="🔥")
 
-with st.spinner('Loading Checkpoint Information...'):
-    with col1:
-        st.metric(label="Next Checkpoint", value=next_checkpoint)
+    with st.spinner('Loading Checkpoint Information...'):
+        with col1:
+            st.metric(label="Next Checkpoint", value=next_checkpoint)
 
-    with col2:
-        st.metric(label="Est. Time To Reach", value=f"{cdelta}")
+        with col2:
+            st.metric(label="Est. Time To Reach", value=f"{cdelta}")
 
-    with col3:
-        if final_pred < 0 or final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
-            final_checkpoint = "N/A"
-        else:
-            final_checkpoint = f"{tracker.CHECKPOINTS[min(checknums[final_idx-1], max(tracker.CHECKPOINTS.keys()))]}"
-        st.metric(label="Est. End Checkpoint", value=final_checkpoint)
+        with col3:
+            if final_pred < 0 or final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
+                final_checkpoint = "N/A"
+            else:
+                final_checkpoint = f"{tracker.CHECKPOINTS[min(checknums[final_idx-1], max(tracker.CHECKPOINTS.keys()))]}"
+            st.metric(label="Est. End Checkpoint", value=final_checkpoint)
+except:
+    st.write("Coming soon!")
+    pass
 
 st.header("Fund Daily Changes")
 
 try:
-# get daily
+    # get daily
     daily = df["Time"].str.extract(rf'(\s2:0[012]|\s1:5[789])').dropna()
-# # draw time series
+    # draw time series
     df_d = df.iloc[daily.index]
     df_d["Day"] = list(range(df_d.shape[0]))
     df_d["Diff"] = np.round(df_d["Fund"].diff(), -1).fillna(0).astype(int)
