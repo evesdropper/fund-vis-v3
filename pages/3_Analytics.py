@@ -47,7 +47,10 @@ if inc_24 and inc_24 > 1000 and float(inc_24_pct) > 10:
     st.info("The fund is growing quickly right now!", icon="📈")
 
 with col1:
-    st.metric(label="Current Fund", value=f"{cfund}M", delta=f"{cfund_delta}K")
+    if cfund < 1:
+        st.metric(label="Current Fund", value=f"{cfund * 1000}K", delta=f"{cfund_delta}K")
+    else:
+        st.metric(label="Current Fund", value=f"{cfund}M", delta=f"{cfund_delta}K")
 
 with col2:
     if inc_24 and inc_24_pct:
