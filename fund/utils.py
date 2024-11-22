@@ -24,7 +24,7 @@ def get_day():
     """
     x-axis boundary moment
     """
-    today = datetime.datetime.utcnow().date()
+    today = datetime.datetime.now(datetime.timezone.utc).date()
     end_x = (today + datetime.timedelta(days=1))
     return end_x
 

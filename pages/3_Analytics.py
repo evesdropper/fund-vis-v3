@@ -56,7 +56,8 @@ with col2:
         st.metric(label="Change in Past 24 Hours", value="N/A", delta="N/A")
 
 with col3:
-    if final_pred < 0 or final_pred > max(tracker.CHECKPOINTS.keys()) * 3:
+    cutoff_date = tracker.START_DATE + datetime.timedelta(days=3)
+    if final_pred < 0 or datetime.datetime.now() < cutoff_date or final_pred > max(tracker.CHECKPOINTS.keys()) * 1.5:
         final_pred_value = "N/A"
     else: 
         final_pred_value = f"{final_pred}M"
