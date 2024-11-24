@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.dates as mdates
 import plotly.graph_objects as go
+import datetime
 from fund import utils, tracker
 
 st.set_page_config(layout="wide", page_title="Tanki Fund Tracker")
@@ -25,7 +26,8 @@ pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)"]], mult
 
 # plotting
 tr_realtime = go.Scatter(x=unique_funds["Time"], y=unique_funds["Fund"], mode="lines+markers", name="Fund Entries")
-if False:
+cutoff_date = tracker.START_DATE + datetime.timedelta(days=3)
+if datetime.datetime.now() < cutoff_date:
     try: 
         tr_prediction = go.Scatter(x=pred_df["Time"], y=pred_df["Predicted"], mode="lines", name="Predicted Fund", line = dict(color='grey'))
         fig = go.Figure([tr_realtime, tr_prediction])
