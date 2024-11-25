@@ -49,15 +49,8 @@ for check in checks:
 # fig.add_vrect(x0="2023-11-20 06:30", x1="2023-11-21 09:00", fillcolor="red", opacity=0.2, line_width=0)
 
 # general
-fig.update_xaxes(range=[tracker.START_DATE, utils.get_day()], # rangeslider_visible=True,
-    # rangeselector=dict(
-    #     buttons=list([
-    #         dict(count=1, label="1d", step="day", stepmode="backward"),
-    #         dict(count=3, label="3d", step="day", stepmode="backward"),
-    #         dict(count=7, label="1w", step="day", stepmode="backward"),
-    #         dict(step="all")
-    #     ]))
-)
+xmax_num = min(mdates.date2num(tracker.START_DATE + datetime.timedelta(days=30)), mdates.date2num(utils.get_day()))
+fig.update_xaxes(range=[tracker.START_DATE, mdates.num2date(xmax_num)])
 fig.update_yaxes(range=[0, 1.2 * ymax])
 fig.update_layout(
     title={"text": "Tanki Fund over Time", 'x':0.5, 'xanchor': 'center'},
