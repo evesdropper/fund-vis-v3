@@ -18,7 +18,7 @@ def sheet_to_df(url=tracker.DATA_URL, colnames=["Time", "Fund"]):
     """
     as_csv = url.replace("/edit#gid=", "/export?format=csv&gid=")
     df = pd.read_csv(as_csv, names=colnames)
-    return df.dropna()
+    return df.dropna().reset_index(drop=True)
 
 def get_day():
     """
