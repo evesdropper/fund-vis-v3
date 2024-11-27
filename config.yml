@@ -1,5 +1,6 @@
-# current fund - update this only
+# current fund - update this for new iteration
 current_fund:
+  iteration: "2024 - Winter Major"
   start_date: 2024-11-22 2:00
   data_url: "https://docs.google.com/spreadsheets/d/1mGZVcTbSvR2KE648HvHHHW7Cyqn-qtjI6bEqTbkte-o/edit#gid=0"
   checkpoints:
@@ -18,7 +19,7 @@ current_fund:
     29: "Gauss Nemesis"
     30: "3 Legendary Keys"
 
-# past funds
+# past funds - move previous down to archive
 archive:
   s22:
     start_date: 2022-07-04 2:00

@@ -3,13 +3,17 @@ import numpy as np
 import pandas as pd
 import matplotlib.dates as mdates
 import plotly.graph_objects as go
+import yaml
 import datetime
 from fund import utils, tracker
 
 st.set_page_config(layout="wide", page_title="Tanki Fund Tracker")
 
+with open("config.yml", "r") as file:
+    fund_config = yaml.safe_load(file)["current_fund"]
+    
 st.title('Tanki Fund Tracker')
-st.header("2024 - Summer Major")
+st.header(fund_config["iteration"])
 
 # obtain and clean data
 df = utils.sheet_to_df()
