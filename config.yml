@@ -18,6 +18,7 @@ current_fund:
     27: "Titan GT"
     29: "Gauss Nemesis"
     30: "3 Legendary Keys"
+  notes: []
 
 # past funds - move previous down to archive
 archive:

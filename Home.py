@@ -49,11 +49,12 @@ for check in checks:
         fig.add_hline(y=checkm, line_color="red", annotation_text=f"Upcoming: {tracker.CHECKPOINTS[check]}")
 
 # Notes
-# fig.add_vrect(x0="2023-11-17 02:00", x1="2023-11-18 17:37", fillcolor="red", opacity=0.2, line_width=0)
-# fig.add_vrect(x0="2023-11-20 06:30", x1="2023-11-21 09:00", fillcolor="red", opacity=0.2, line_width=0)
+notes = fund_config["notes"]
+for note in notes:
+    fig.add_vrect(x0=note[0], x1=note[1], fillcolor="red", opacity=0.2, line_width=0)
 
 # general
-xmax_num = min(mdates.date2num(tracker.START_DATE + datetime.timedelta(days=30)), mdates.date2num(utils.get_day()))
+xmax_num = min(mdates.date2num(tracker.START_DATE + datetime.timedelta(days=30)), max(mdates.date2num(utils.get_day()), mdates.date2num(unique_funds.iloc[0, -1])))
 fig.update_xaxes(range=[tracker.START_DATE, mdates.num2date(xmax_num)])
 fig.update_yaxes(range=[0, 1.2 * ymax])
 fig.update_layout(
