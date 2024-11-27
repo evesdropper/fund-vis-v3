@@ -1,6 +1,8 @@
 from http.client import NETWORK_AUTHENTICATION_REQUIRED
 import os, sys
+import yaml
 import datetime
+import fund
 import numpy as np
 import pandas as pd
 import matplotlib.dates as mdates
@@ -10,13 +12,13 @@ from fund import utils
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
 
-START_DATE = datetime.datetime.strptime("2024-11-22 2:00", "%Y-%m-%d %H:%M")
+with open("config.yml", "r") as file:
+    fund_config = yaml.safe_load(file)["current_fund"]
+
+START_DATE = datetime.datetime.strptime(fund_config["start_date"], "%Y-%m-%d %H:%M")
 X_SHIFT = mdates.date2num(START_DATE)
-CHECKPOINTS = {1: "Nuclear Energy", 2: "Grenades", 
-               11: "Striker Tandem", 12: "Nuclear Energy", 13: "Magnum Bombard", 15: "Armadillo", 17: "Isida Sustainable Nanobots", 19: "Magnum Destroyer", 
-               21: "Ricochet GT", 23: "Ricochet Pulsar", 25: "Legendary Key", 27: "Titan GT", 29: "Gauss Nemesis", 30: "3 Legendary Keys"
-              }
-DATA_URL = "https://docs.google.com/spreadsheets/d/1mGZVcTbSvR2KE648HvHHHW7Cyqn-qtjI6bEqTbkte-o/edit#gid=0"
+CHECKPOINTS = fund_config["checkpoints"]
+DATA_URL = fund_config["data_url"]
 
 def regression(log=None):
     """
