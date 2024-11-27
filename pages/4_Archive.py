@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.dates as mdates
 import plotly.graph_objects as go
-from fund import utils, tracker
+from fund import utils
 
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())

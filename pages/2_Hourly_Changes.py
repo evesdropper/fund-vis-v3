@@ -1,14 +1,23 @@
 import os, sys
+import yaml
 import numpy as np
 import pandas as pd
 import matplotlib.dates as mdates
 import plotly.graph_objects as go
 import streamlit as st
 
-from fund import utils, tracker
+from fund import utils
+
+# stop warning me idc
+pd.options.mode.chained_assignment = None 
 
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
+
+# get config
+with open("config.yml", "r") as file:
+    fund_config = yaml.safe_load(file)["current_fund"]
+
 st.set_page_config(layout="wide", page_title="Hourly Changes")
 st.title('Fund Hourly Changes')
 
@@ -32,7 +41,7 @@ fig = go.Figure([trace])
 fig.add_hline(y=avg_change, line_color="gray", annotation_text=f"Avg Hourly Change: {np.round(avg_change, -2) / 10 ** 3}k")
 
 # layout
-fig.update_xaxes(range=[tracker.START_DATE, utils.get_day()], rangeslider_visible=True,
+fig.update_xaxes(range=[fund_config["start_date"], utils.get_day()], rangeslider_visible=True,
     rangeselector=dict(
         buttons=list([
             dict(count=1, label="1d", step="day", stepmode="backward"),

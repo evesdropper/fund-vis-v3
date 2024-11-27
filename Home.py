@@ -37,8 +37,8 @@ if datetime.datetime.now() < cutoff_date:
         fig = go.Figure([tr_realtime, tr_prediction])
     except:
         fig = go.Figure([tr_realtime])
-
-fig = go.Figure([tr_realtime])
+else:
+    fig = go.Figure([tr_realtime])
 
 # Checklines
 for check in checks:
