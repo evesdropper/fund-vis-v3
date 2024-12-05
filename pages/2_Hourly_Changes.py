@@ -31,13 +31,15 @@ df_h["tnum"] = mdates.datestr2num(df_h["Time"])
 df_h["tnd"] = df_h["tnum"].diff()
 df_h["Diff"] = df_h["Fund"].diff()
 dfh_graph = df_h[df_h["tnd"].between(0.9/24, 1.1/24)].dropna()
-avg_change = dfh_graph["Diff"].mean()
 dfh_graph = dfh_graph[dfh_graph["Diff"] < 250000]
 
 trace = go.Scatter(x=dfh_graph["Time"], y=dfh_graph["Diff"], mode="lines+markers", name="Change in Past Hour")
 fig = go.Figure([trace])
 
 # avg
+most_recent_time = mdates.datestr2num(df.iloc[-1, 0])
+most_recent_value = df.iloc[-1, 1]
+avg_change = most_recent_value / (24 * (most_recent_time - mdates.datestr2num(fund_config["start_date"])))
 fig.add_hline(y=avg_change, line_color="gray", annotation_text=f"Avg Hourly Change: {np.round(avg_change, -2) / 10 ** 3}k")
 
 # layout

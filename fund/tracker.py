@@ -8,6 +8,7 @@ import pandas as pd
 import matplotlib.dates as mdates
 from sklearn.linear_model import LinearRegression
 from fund import utils
+from typing import Callable
 
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
@@ -20,7 +21,7 @@ X_SHIFT = mdates.date2num(START_DATE)
 CHECKPOINTS = fund_config["checkpoints"]
 DATA_URL = fund_config["data_url"]
 
-def regression(log=None):
+def regression() -> tuple[float, float]:
     """
     Regression
     """
@@ -31,7 +32,7 @@ def regression(log=None):
     b = np.mean(y) - m * np.mean(x)
     return m, b
 
-def predict(x, newton=True, multi=None):
+def predict(x: int, newton: bool = True, multi: bool = False) -> int:
     """
     Prediction using Multiple Linear Regression on Time and ln(Time).
     """
@@ -54,11 +55,11 @@ def predict(x, newton=True, multi=None):
         return lin_multiple.predict([[x, np.log(x)]])[0] - (shift * (10 ** 6))
     return lin_multiple.predict([[x, np.log(x)]])[0]
 
-def newton(f=predict, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35), tol=1/24):
+def newton(f: Callable = predict, a: float = mdates.date2num(datetime.datetime.now()) - X_SHIFT, b: float = min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35), tol: float = 1/24) -> float:
     """
     Modified Newton's Method. Modified from MATLAB code from Math 128A PA1.
     """
-    w, i = 1, 1
+    w, i = 1.0, 1
     # print(' n a b p f(p) \n')
     # print('--------------\n')
     while i < 100:
@@ -75,7 +76,7 @@ def newton(f=predict, a=mdates.date2num(datetime.datetime.now()) - X_SHIFT, b=mi
         i += 1
     return p
 
-def tdelta_format(td):
+def tdelta_format(td: datetime.timedelta) -> str:
     seconds = np.round(td.total_seconds())
     days, rem1 = divmod(seconds, 86400)
     hours, rem2 = divmod(rem1, 3600)

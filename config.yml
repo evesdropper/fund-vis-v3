@@ -26,6 +26,7 @@ archive:
     start_date: 2022-07-04 2:00
     end_date: 2022-08-08 2:00
     data_url: "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/edit#gid=1817523881"
+    final_fund: 18516000
     checkpoints:
       1: "Nuclear Energy"
       4: "Prot Slot"
@@ -43,6 +44,7 @@ archive:
     start_date: 2023-11-17 2:00
     end_date: 2023-12-20 2:00
     data_url: "https://docs.google.com/spreadsheets/d/1GiJQvvwp9cGWyRom5x6gc8qUjgUL2ONWyKfewBVY6sA/edit#gid=0"
+    final_fund: 16669500
     checkpoints:
       1: "Nuclear Energy"
       2: "Module Slot"
@@ -68,6 +70,7 @@ archive:
     start_date: 2024-06-07 2:00
     end_date: 2024-07-05 2:00
     data_url: "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/edit#gid=1900607599"
+    final_fund: 16681500
     checkpoints:
       1: "Nuclear Energy"
       2: "Module Slot"
