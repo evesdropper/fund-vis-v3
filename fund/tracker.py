@@ -21,6 +21,7 @@ X_SHIFT = mdates.date2num(START_DATE)
 CHECKPOINTS = fund_config["checkpoints"]
 DATA_URL = fund_config["data_url"]
 
+
 def regression() -> tuple[float, float]:
     """
     Regression
@@ -32,6 +33,7 @@ def regression() -> tuple[float, float]:
     b = np.mean(y) - m * np.mean(x)
     return m, b
 
+
 def predict(x: int, newton: bool = True, multi: bool = False) -> int:
     """
     Prediction using Multiple Linear Regression on Time and ln(Time).
@@ -42,20 +44,26 @@ def predict(x: int, newton: bool = True, multi: bool = False) -> int:
     df["# Days^2"] = np.square(mdates.datestr2num(df["Time"]) - X_SHIFT)
     # print(df)
     lin_multiple = LinearRegression()
-    lin_multiple.fit(X = df[["# Days", "# Days (Log)"]], y = df["Fund"])
+    lin_multiple.fit(X=df[["# Days", "# Days (Log)"]], y=df["Fund"])
     # get checkpoint information
     checknums = list(CHECKPOINTS.keys())
     idx = 0
-    while checknums[idx] < df.iloc[-1, 1] / 10 ** 6:
+    while checknums[idx] < df.iloc[-1, 1] / 10**6:
         idx += 1
     shift = checknums[idx]
     if multi:
         return lin_multiple.predict(x)
     elif newton:
-        return lin_multiple.predict([[x, np.log(x)]])[0] - (shift * (10 ** 6))
+        return lin_multiple.predict([[x, np.log(x)]])[0] - (shift * (10**6))
     return lin_multiple.predict([[x, np.log(x)]])[0]
 
-def newton(f: Callable = predict, a: float = mdates.date2num(datetime.datetime.now()) - X_SHIFT, b: float = min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35), tol: float = 1/24) -> float:
+
+def newton(
+    f: Callable = predict,
+    a: float = mdates.date2num(datetime.datetime.now()) - X_SHIFT,
+    b: float = min(mdates.date2num(datetime.datetime.now()) - X_SHIFT + 5, 35),
+    tol: float = 1 / 24,
+) -> float:
     """
     Modified Newton's Method. Modified from MATLAB code from Math 128A PA1.
     """
@@ -75,6 +83,7 @@ def newton(f: Callable = predict, a: float = mdates.date2num(datetime.datetime.n
             break
         i += 1
     return p
+
 
 def tdelta_format(td: datetime.timedelta) -> str:
     seconds = np.round(td.total_seconds())
