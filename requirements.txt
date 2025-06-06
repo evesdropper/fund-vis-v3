@@ -1,0 +1,11 @@
+matplotlib
+pandas
+numpy
+requests
+bs4
+beautifulsoup4
+plotly
+streamlit
+scikit-learn
+pyyaml
+typing
