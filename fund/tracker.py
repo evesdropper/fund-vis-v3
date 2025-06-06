@@ -1,14 +1,17 @@
-from http.client import NETWORK_AUTHENTICATION_REQUIRED
-import os, sys
-import yaml
 import datetime
-import fund
+import os
+import sys
+from http.client import NETWORK_AUTHENTICATION_REQUIRED
+from typing import Callable
+
+import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
-import matplotlib.dates as mdates
+import yaml
 from sklearn.linear_model import LinearRegression
+
+import fund
 from fund import utils
-from typing import Callable
 
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, os.getcwd())
@@ -19,7 +22,7 @@ with open("config.yml", "r") as file:
 START_DATE = datetime.datetime.strptime(fund_config["start_date"], "%Y-%m-%d %H:%M")
 X_SHIFT = mdates.date2num(START_DATE)
 CHECKPOINTS = fund_config["checkpoints"]
-DATA_URL = fund_config["data_url"]
+DATA_URL = f"https://docs.google.com/spreadsheets/d/{fund_config['sheet_id']}/export?gid={fund_config['sheet_gid']}&format=csv"
 
 
 def regression() -> tuple[float, float]:

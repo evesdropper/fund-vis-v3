@@ -21,13 +21,15 @@ Utils
 
 @st.cache_data(ttl=1800)
 def sheet_to_df(
-    url: str = fund_config["data_url"], colnames: list[str] = ["Time", "Fund"]
+    sheet_id: str = fund_config["sheet_id"],
+    sheet_gid: str = fund_config["sheet_gid"],
+    colnames: list[str] = ["Time", "Fund"],
 ) -> pd.DataFrame:
     """
     Tonk fund sheet go csv go df go brr
     """
-    as_csv = url.replace("/edit#gid=", "/export?format=csv&gid=")
-    df = pd.read_csv(as_csv, names=colnames)
+    url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?gid={sheet_gid}&format=csv"
+    df = pd.read_csv(url, names=colnames)
     return df.dropna().reset_index(drop=True)
 
 
