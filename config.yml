@@ -1,23 +1,16 @@
 # current fund - update this for new iteration
 current_fund:
-  iteration: "2024 - Winter Major"
-  start_date: 2024-11-22 2:00
-  data_url: "https://docs.google.com/spreadsheets/d/1mGZVcTbSvR2KE648HvHHHW7Cyqn-qtjI6bEqTbkte-o/edit#gid=0"
+  iteration: "2025 - Summer Major"
+  start_date: 2025-06-06 2:00
+  data_url: "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/edit#gid=408268708"
   checkpoints:
-    1: "Nuclear Energy"
-    2: "Grenades"
-    11: "Striker Tandem"
-    12: "Nuclear Energy"
-    13: "Magnum Bombard"
-    15: "Armadillo"
-    17: "Isida Sustainable Nanobots"
-    19: "Magnum Destroyer"
-    21: "Ricochet GT"
-    23: "Ricochet Pulsar"
-    25: "Legendary Key"
-    27: "Titan GT"
-    29: "Gauss Nemesis"
-    30: "3 Legendary Keys"
+    3: "Hornet Excelsior"
+    5: "Hammer Boxer"
+    7: "Crisis"
+    9: "Magnum Bombard"
+    10: "Armadillo"
+    11: "Legendary Key"
+    12: "Hammer SP"
   notes: []
 
 # past funds - move previous down to archive
@@ -87,3 +80,23 @@ archive:
       29: "Firebird Critical Mix"
       30: "3 Legendary Keys"
     notes: [["2024-06-13 16:30", "2024-06-14 06:3"], ["2024-06-28 01:30", "2024-07-01 22:00"], ["2024-07-02 23:30", "2024-07-03 14:30"]]
+w24:
+  start_date: 2024-11-22 2:00
+  end_date: 2024-12-21 2:00
+  data_url: "https://docs.google.com/spreadsheets/d/1mGZVcTbSvR2KE648HvHHHW7Cyqn-qtjI6bEqTbkte-o/edit#gid=0"
+  checkpoints:
+    1: "Nuclear Energy"
+    2: "Grenades"
+    11: "Striker Tandem"
+    12: "Nuclear Energy"
+    13: "Magnum Bombard"
+    15: "Armadillo"
+    17: "Isida Sustainable Nanobots"
+    19: "Magnum Destroyer"
+    21: "Ricochet GT"
+    23: "Ricochet Pulsar"
+    25: "Legendary Key"
+    27: "Titan GT"
+    29: "Gauss Nemesis"
+    30: "3 Legendary Keys"
+  notes: []
