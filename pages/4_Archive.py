@@ -28,14 +28,15 @@ st.write(
 
 def generate_main_fig(
     event: str,
-    data_url: str,
+    sheet_id: str,
+    sheet_gid: str,
     checkpoints: dict[int, str],
     start_date: datetime.datetime,
     end_date: datetime.datetime,
     x_shift: float,
     notes: list[list[str]] = [],
 ) -> go.Figure:
-    df = utils.sheet_to_df(url=data_url)
+    df = utils.sheet_to_df(sheet_id=sheet_id, sheet_gid=sheet_gid)
     unique_funds = (
         df.sort_values("Time", ascending=True)
         .drop_duplicates(subset=["Fund"])
@@ -99,12 +100,13 @@ def generate_main_fig(
 
 def generate_hourly_fig(
     event: str,
-    data_url: str,
+    sheet_id: str,
+    sheet_gid: str,
     start_date: datetime.datetime,
     end_date: datetime.datetime,
     notes: list[list[str]] = [],
 ) -> go.Figure:
-    df = utils.sheet_to_df(url=data_url)
+    df = utils.sheet_to_df(sheet_id=sheet_id, sheet_gid=sheet_gid)
     hourly = df["Time"].str.extract(rf"(:0[012])").dropna()
 
     # draw time series
@@ -212,7 +214,8 @@ def generate_archive_content(season: str, year: int) -> None:
 
     main_fig = generate_main_fig(
         f"{season[0].upper()}{year}",
-        fund_config[dict_key]["data_url"],
+        fund_config[dict_key]["sheet_id"],
+        fund_config[dict_key]["sheet_gid"],
         checkpoints,
         start_date,
         end_date,
@@ -224,7 +227,8 @@ def generate_archive_content(season: str, year: int) -> None:
 
     hourly_fig = generate_hourly_fig(
         f"{season[0].upper()}{year}",
-        fund_config[dict_key]["data_url"],
+        fund_config[dict_key]["sheet_id"],
+        fund_config[dict_key]["sheet_gid"],
         start_date,
         end_date,
         fund_config[dict_key]["notes"],
@@ -237,3 +241,4 @@ def generate_archive_content(season: str, year: int) -> None:
 generate_archive_content("summer", 22)
 generate_archive_content("winter", 23)
 generate_archive_content("summer", 24)
+generate_archive_content("winter", 24)

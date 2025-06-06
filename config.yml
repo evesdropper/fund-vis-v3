@@ -2,7 +2,8 @@
 current_fund:
   iteration: "2025 - Summer Major"
   start_date: 2025-06-06 2:00
-  data_url: "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/edit#gid=408268708"
+  sheet_id: "1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk"
+  sheet_gid: "408268708"
   checkpoints:
     3: "Hornet Excelsior"
     5: "Hammer Boxer"
@@ -18,7 +19,8 @@ archive:
   s22:
     start_date: 2022-07-04 2:00
     end_date: 2022-08-08 2:00
-    data_url: "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/edit#gid=1817523881"
+    sheet_id: "1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk"
+    sheet_gid: "1817523881"
     final_fund: 18516000
     checkpoints:
       1: "Nuclear Energy"
@@ -36,7 +38,8 @@ archive:
   w23:
     start_date: 2023-11-17 2:00
     end_date: 2023-12-20 2:00
-    data_url: "https://docs.google.com/spreadsheets/d/1GiJQvvwp9cGWyRom5x6gc8qUjgUL2ONWyKfewBVY6sA/edit#gid=0"
+    sheet_id: "1GiJQvvwp9cGWyRom5x6gc8qUjgUL2ONWyKfewBVY6sA"
+    sheet_gid: 0
     final_fund: 16669500
     checkpoints:
       1: "Nuclear Energy"
@@ -62,7 +65,8 @@ archive:
   s24:
     start_date: 2024-06-07 2:00
     end_date: 2024-07-05 2:00
-    data_url: "https://docs.google.com/spreadsheets/d/1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk/edit#gid=1900607599"
+    sheet_id: "1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk"
+    sheet_gid: "1900607599"
     final_fund: 16681500
     checkpoints:
       1: "Nuclear Energy"
@@ -80,23 +84,25 @@ archive:
       29: "Firebird Critical Mix"
       30: "3 Legendary Keys"
     notes: [["2024-06-13 16:30", "2024-06-14 06:3"], ["2024-06-28 01:30", "2024-07-01 22:00"], ["2024-07-02 23:30", "2024-07-03 14:30"]]
-w24:
-  start_date: 2024-11-22 2:00
-  end_date: 2024-12-21 2:00
-  data_url: "https://docs.google.com/spreadsheets/d/1mGZVcTbSvR2KE648HvHHHW7Cyqn-qtjI6bEqTbkte-o/edit#gid=0"
-  checkpoints:
-    1: "Nuclear Energy"
-    2: "Grenades"
-    11: "Striker Tandem"
-    12: "Nuclear Energy"
-    13: "Magnum Bombard"
-    15: "Armadillo"
-    17: "Isida Sustainable Nanobots"
-    19: "Magnum Destroyer"
-    21: "Ricochet GT"
-    23: "Ricochet Pulsar"
-    25: "Legendary Key"
-    27: "Titan GT"
-    29: "Gauss Nemesis"
-    30: "3 Legendary Keys"
-  notes: []
+  w24:
+    start_date: 2024-11-22 2:00
+    end_date: 2024-12-21 2:00
+    sheet_id: "1mGZVcTbSvR2KE648HvHHHW7Cyqn-qtjI6bEqTbkte-o"
+    sheet_gid: "0"
+    final_fund: 8296500
+    checkpoints:
+      1: "Nuclear Energy"
+      2: "Grenades"
+      11: "Striker Tandem"
+      12: "Nuclear Energy"
+      13: "Magnum Bombard"
+      15: "Armadillo"
+      17: "Isida Sustainable Nanobots"
+      19: "Magnum Destroyer"
+      21: "Ricochet GT"
+      23: "Ricochet Pulsar"
+      25: "Legendary Key"
+      27: "Titan GT"
+      29: "Gauss Nemesis"
+      30: "3 Legendary Keys"
+    notes: []
