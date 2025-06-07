@@ -11,7 +11,7 @@ current_fund:
     10: "Armadillo"
     11: "Legendary Key"
     12: "Hammer SP"
-  notes: []
+  notes: [["2025-06-06 02:00", "2025-06-06 19:00"]]
 
 # past funds - move previous down to archive
 archive:
