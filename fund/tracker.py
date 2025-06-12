@@ -51,7 +51,7 @@ def predict(x: int, newton: bool = True, multi: bool = False) -> int:
     # get checkpoint information
     checknums = list(CHECKPOINTS.keys())
     idx = 0
-    while checknums[idx] < df.iloc[-1, 1] / 10**6:
+    while checknums[idx] < min(checknums[-1], df.iloc[-1, 1] / 10**6):
         idx += 1
     shift = checknums[idx]
     if multi:
