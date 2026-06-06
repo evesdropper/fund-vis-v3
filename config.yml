@@ -1,17 +1,20 @@
 # current fund - update this for new iteration
 current_fund:
-  iteration: "2025 - Summer Major"
-  start_date: 2025-06-06 2:00
+  iteration: "2026 - Summer Major"
+  start_date: 2026-06-05 2:00
   sheet_id: "1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk"
-  sheet_gid: "408268708"
+  sheet_gid: "1175200997"
   checkpoints:
-    3: "Hornet Excelsior"
-    5: "Hammer Boxer"
-    7: "Crisis"
+    3: "Vulcan GT"
+    5: "Striker GT"
+    7: "Tsunami Pulsar"
     10: "Armadillo"
     11: "Legendary Key"
-    12: "Hammer SP"
-  notes: [["2025-06-06 02:00", "2025-06-06 19:00"]]
+    12: "Hornet SP"
+  booster_checkpoints:
+    20: "Legendary Key"
+    30: "Legendary Key"
+  notes: [["2026-06-05 2:00", "2026-06-05 14:30"]]
 
 # past funds - move previous down to archive
 archive:
@@ -105,3 +108,17 @@ archive:
       29: "Gauss Nemesis"
       30: "3 Legendary Keys"
     notes: []
+  s25:
+    start_date: 2025-06-06 2:00
+    end_date: 2025-07-04 2:00
+    sheet_id: "1IRZ7yPhBAYOZ3BHpdx3zPNdOhwPvBb3__poumHoieVk"
+    sheet_gid: "408268708"
+    final_fund: 29115000
+    checkpoints:
+      3: "Hornet Excelsior"
+      5: "Hammer Boxer"
+      7: "Crisis"
+      10: "Armadillo"
+      11: "Legendary Key"
+      12: "Hammer SP"
+    notes: [["2025-06-06 02:00", "2025-06-06 19:00"]]

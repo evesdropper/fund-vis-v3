@@ -27,6 +27,7 @@ unique_funds = (
 )
 ymax = df["Fund"].max()
 checks = list(tracker.CHECKPOINTS.keys())
+bchecks = list(tracker.BOOSTER_CHECKPOINTS.keys())
 
 end_day_num = np.ceil(mdates.date2num(utils.get_day()) - tracker.X_SHIFT)
 days = np.arange(0, 30, 1 / 1440) + 0.001
@@ -35,7 +36,6 @@ pred_df = pd.DataFrame(
 )
 pred_df["Time"] = mdates.num2date(tracker.X_SHIFT + pred_df["# Days"])
 pred_df["Time"] = pred_df["Time"].dt.strftime("%Y-%m-%d %H:%M")
-pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)"]], multi=True)
 
 # plotting
 tr_realtime = go.Scatter(
@@ -49,6 +49,7 @@ if datetime.datetime.now() < cutoff_date:
     fig = go.Figure([tr_realtime])
 else:
     try:
+        pred_df["Predicted"] = tracker.predict(pred_df[["# Days", "# Days (Log)"]], multi=True)
         tr_prediction = go.Scatter(
             x=pred_df["Time"],
             y=pred_df["Predicted"],
@@ -76,16 +77,35 @@ for check in checks:
             annotation_text=f"Upcoming: {tracker.CHECKPOINTS[check]}",
         )
 
+# for bcheck in bchecks:
+#     bcheckm = bcheck * 1000000
+#     if bcheckm <= ymax:
+#         fig.add_hline(
+#             y=bcheckm,
+#             line_color="gold",
+#             annotation_text=f"Booster Achieved: {tracker.CHECKPOINTS[check]}",
+#         )
+#     else:
+#         fig.add_hline(
+#             y=bcheckm,
+#             line_color="red",
+#             annotation_text=f"Booster Upcoming: {tracker.CHECKPOINTS[check]}",
+#         )
+
 # Notes
 notes = fund_config["notes"]
 for note in notes:
     fig.add_vrect(x0=note[0], x1=note[1], fillcolor="red", opacity=0.2, line_width=0)
 
 # general
-xmax_num = min(
-    mdates.date2num(tracker.START_DATE + datetime.timedelta(days=30)),
-    max(mdates.date2num(utils.get_day()), mdates.date2num(unique_funds.iloc[0, -1])),
-)
+try:
+    xmax_num = min(
+        mdates.date2num(tracker.START_DATE + datetime.timedelta(days=30)),
+        max(mdates.date2num(utils.get_day()), mdates.date2num(unique_funds.iloc[0, -1]))
+    )
+except:
+    xmax_num = mdates.date2num(utils.get_day())
+
 fig.update_xaxes(range=[tracker.START_DATE, mdates.num2date(xmax_num)])
 fig.update_yaxes(range=[0, 1.2 * ymax])
 fig.update_layout(

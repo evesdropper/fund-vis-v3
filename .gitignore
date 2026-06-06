@@ -6,3 +6,5 @@ etc/
 lib/
 share/
 pyvenv.cfg
+
+fund/__pycache__

@@ -22,6 +22,7 @@ with open("config.yml", "r") as file:
 START_DATE = datetime.datetime.strptime(fund_config["start_date"], "%Y-%m-%d %H:%M")
 X_SHIFT = mdates.date2num(START_DATE)
 CHECKPOINTS = fund_config["checkpoints"]
+BOOSTER_CHECKPOINTS = fund_config["booster_checkpoints"]
 DATA_URL = f"https://docs.google.com/spreadsheets/d/{fund_config['sheet_id']}/export?gid={fund_config['sheet_gid']}&format=csv"
 
 
